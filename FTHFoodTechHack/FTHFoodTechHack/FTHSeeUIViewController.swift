@@ -69,6 +69,8 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.fthRefrigeratorModel.normalFoodStocks.remove(at: indexPath.row)
                 
             }
+			
+			// TODO: サーバのデータも消す
             self.myTableView.deleteRows(at:[indexPath], with: .automatic)
             return true
         })]
@@ -90,7 +92,10 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         let home = ViewController()
         self.navigationController?.pushViewController(home, animated: true)
     }
-    
+	
+	func deleteRemoteData() {
+		
+	}
     
     @IBAction func didTapBackButton(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)

@@ -71,7 +71,8 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
         try! realm.write{
             realm.add(realmFood)
         }
-        
+		
+		// TODO: サーバのデータを追加する
     }
     
     func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {

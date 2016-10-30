@@ -54,7 +54,7 @@ class BestBeforeDate {
 			var table : [ String : (Int, NSDate, Int) ] = [ : ]
 			
 			json["item_master"].arrayValue.forEach {
-				let id = Int($0["item_id"].string!)!
+				let id = Int($0["user_item_id"].string!)!
 				let name = $0["original_name"].string!
 				let date = self.calcDeadlineFromRangeString($0["default_expire_days"].string!)
 				let price = self.extractPriceFromFullText(original_text, word: name)
