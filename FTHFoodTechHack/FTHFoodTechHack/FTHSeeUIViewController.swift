@@ -1,5 +1,6 @@
 import UIKit
 import MGSwipeTableCell
+import Alamofire
 
 class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -61,29 +62,33 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         //implemented left and right buttons to enable users to remove/send line to fams.
         cell.rightButtons = [MGSwipeButton(title: "削除する", icon: UIImage(named:"check.png"), backgroundColor: UIColor.red, callback: {
             (sender: MGSwipeTableCell!) -> Bool in
-            
-            //crashes when multiple objects are deleted at the same time. need to be fized before demo. 
+			
+			if (indexPath as NSIndexPath).section == 0 {
+				self.deleteRemoteData(self.fthRefrigeratorModel.expiringFoodStocks[indexPath.row])
+			} else {
+				self.deleteRemoteData(self.fthRefrigeratorModel.normalFoodStocks[indexPath.row])
+			}
+
+            //crashes when multiple objects are deleted at the same time. need to be fized before demo.
             if (indexPath as NSIndexPath).section == 0 {
                 self.fthRefrigeratorModel.expiringFoodStocks.remove(at:indexPath.row)
             } else {
                 self.fthRefrigeratorModel.normalFoodStocks.remove(at: indexPath.row)
-                
             }
 			
-			// TODO: サーバのデータも消す
             self.myTableView.deleteRows(at:[indexPath], with: .automatic)
             return true
         })]
         
-        cell.leftButtons = [MGSwipeButton(title: "LINEに送る", icon: UIImage(named:"fav.png"), backgroundColor: UIColor.green, callback: {
-            (sender: MGSwipeTableCell!) -> Bool in
-            /*TODO(totem):lineに伝送するやつお願いします。商品名はcell.textLabel?.textで情報が取れます。
-             i.e.             
-             print("%s", cell.textLabel?.text) ->"ほうれん草"
-             */
-            return true
-            })]
-        cell.leftSwipeSettings.transition = MGSwipeTransition.rotate3D
+//        cell.leftButtons = [MGSwipeButton(title: "LINEに送る", icon: UIImage(named:"fav.png"), backgroundColor: UIColor.green, callback: {
+//            (sender: MGSwipeTableCell!) -> Bool in
+//            /*TODO(totem):lineに伝送するやつお願いします。商品名はcell.textLabel?.textで情報が取れます。
+//             i.e.
+//             print("%s", cell.textLabel?.text) ->"ほうれん草"
+//             */
+//            return true
+//            })]
+//        cell.leftSwipeSettings.transition = MGSwipeTransition.rotate3D
 
         return cell
     }
@@ -93,8 +98,19 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationController?.pushViewController(home, animated: true)
     }
 	
-	func deleteRemoteData() {
+	func deleteRemoteData(_ item : FTHFoodModel) {
+		let accessToken = self.getAccessToken()
 		
+		Alamofire.request("https://app.uthackers-app.tk/item/delete", method: .post, parameters: [
+			"user_item_id": [ item.id ]
+		], encoding: JSONEncoding.default, headers: [ "x-access-token" : accessToken ]).responseJSON { response in
+			print("Status Code: \(response.result.isSuccess)")
+		}
+	}
+	
+	func getAccessToken() -> String {
+		let ud = UserDefaults.standard
+		return ud.object(forKey: "x-access-token") as! String
 	}
     
     @IBAction func didTapBackButton(_ sender: UIButton) {
