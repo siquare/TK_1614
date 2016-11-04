@@ -4,44 +4,125 @@ import FlatUIKit
 import Alamofire
 import RealmSwift
 
-class FTHConfirmationViewController: UIViewController {
+class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
+    
     var realm: Realm?
-    var myScrollView: UIScrollView!
+    var tableView : UITableView = UITableView()
+    var tableViewData : [(name:String, date:NSDate, price:Int)]
+    
+    //var myScrollView: UIScrollView!
     var table : [ String : (Int, NSDate, Int) ]
     var myDatePicker : UIDatePicker
+    var selectedCell : FTHConfrimationTableCell
+    var toolBar : UIToolbar
+    
+    @available(iOS 2.0, *)
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "concell", for: indexPath as IndexPath) as! FTHConfrimationTableCell
+        //set cell's delegate
+        cell.nameTextField?.delegate = self
+        cell.priceTextField?.delegate = self
+        cell.dateTextField?.delegate = self
+        
+        //add datepicker and accessoryView
+        cell.dateTextField?.inputAccessoryView = self.toolBar
+        cell.dateTextField?.inputView = self.myDatePicker
+        
+        //set initial value
+        let dataSource = self.tableViewData[indexPath.row]
+        cell.nameTextField?.text = dataSource.name
+        cell.dateTextField?.text =  self.stringFromDate(date: dataSource.date as NSDate, format: "yyyy-MM-dd")
+        cell.priceTextField?.text = String(dataSource.price)
+        
+        return cell
+    }
+
+    @available(iOS 2.0, *)
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+         return self.table.count
+    }
     
     init(table: [ String : (Int, NSDate, Int)]) {
         self.table = table
-        print(self.table)
+        
         let myDatePicker = UIDatePicker()
         self.myDatePicker = myDatePicker
+        let toolBar = UIToolbar()
+        self.toolBar = toolBar
+        let selectedCell = FTHConfrimationTableCell()
+        self.selectedCell = selectedCell
+        self.tableViewData = []
+        
         super.init(nibName:nil, bundle: nil)
+        
         self.myDatePicker.addTarget(self, action: #selector(changedDateEvent), for: UIControlEvents.valueChanged)
         self.myDatePicker.datePickerMode = UIDatePickerMode.date
+        
+        toolBar.frame = CGRectMake(0, self.view.frame.size.height/6, self.view.frame.size.width, 40.0)
+        toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
+        toolBar.barStyle = .blackTranslucent
+        toolBar.tintColor = UIColor.white
+        toolBar.backgroundColor = UIColor.black
+        
+        let toolBarBtn = UIBarButtonItem(title: "完了", style: .bordered, target: self, action: #selector(didTapKanryoButton))//need to implement kanryo
+        
+        toolBarBtn.tag = 1
+        toolBar.items = [toolBarBtn]
+        
+        tableView.separatorColor = UIColor.clear
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func viewDidLoad() {
         self.realm = try! Realm()
         super.viewDidLoad()
-        myScrollView = UIScrollView()
-        myScrollView.backgroundColor = UIColor.white
-        myScrollView.frame = CGRect(x:0, y:0, width:self.view.frame.size.width, height:self.view.frame.size.height)
-        myScrollView.contentSize = CGSize(width:self.view.frame.size.width, height:2000)
-        self.view.addSubview(myScrollView)
-        
-        var index = 0
-        let textFieldHeight = 50
+        self.tableView.allowsSelection = false
+        self.tableView.frame = CGRect(x:0, y:0, width:self.view.frame.size.width, height:self.view.frame.size.height)
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.register(FTHConfrimationTableCell.self, forCellReuseIdentifier: "concell")
+        self.view.addSubview(self.tableView)
+
         for (key, val) in self.table {
-            var fthConSubView = FTHConfirmationSubView(frame: CGRect(x: 0, y: index * textFieldHeight, width: Int(self.view.bounds.size.width), height: textFieldHeight), name: key, date: val.1, price: val.0, nameTextField: FUITextField(), dateTextField: FUITextField(), priceTextView: FUITextField())
-            fthConSubView.dateTextField?.inputView = self.myDatePicker
-            self.myScrollView.addSubview(fthConSubView)
-            index += 1
+            self.tableViewData.append((name:key, date:val.1, price:val.0))
         }
+        
+        func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+            return 1
+        }
+        
+        func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return self.table.count
+        }
+        
+        func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "concell", for: indexPath as IndexPath) as! FTHConfrimationTableCell
+            //set cell's delegate
+            cell.nameTextField?.delegate = self
+            cell.priceTextField?.delegate = self
+            cell.dateTextField?.delegate = self
+            
+            //add datepicker and accessoryView
+            cell.dateTextField?.inputAccessoryView = self.toolBar
+            cell.dateTextField?.inputView = self.myDatePicker
+            
+            //set initial value 
+            let dataSource = self.tableViewData[indexPath.row]
+            cell.nameTextField?.text = dataSource.name
+            cell.dateTextField?.text =  self.stringFromDate(date: dataSource.date as NSDate, format: "yyyy-MM-dd")
+            cell.priceTextField?.text = String(dataSource.price)
+            
+            return cell
+        }
+        
+        func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        }
+        
         let trybutton = FUIButton()
-        trybutton.frame = CGRectMake(100 ,300, 100, 50)
+        trybutton.frame = CGRectMake(self.view.bounds.size.width/2 - 50, self.view.bounds.maxY - 100, 100, 50)
         trybutton.buttonColor =  UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
         trybutton.shadowColor = UIColor.red
         trybutton.shadowHeight = 3.0
@@ -52,24 +133,19 @@ class FTHConfirmationViewController: UIViewController {
         trybutton.setTitle("認証する", for: UIControlState())
         trybutton.addTarget(self, action: #selector(didTapConButton), for:.touchUpInside)
         self.view.addSubview(trybutton)
-
     }
     
     func didTapConButton (_ sender: UIButton){
         var records : [  String : (NSDate, Int, Int) ] = [:]
+        let cells = self.tableView.visibleCells as! Array<FTHConfrimationTableCell>
         
-        for view in self.myScrollView.subviews{
-            if let conview = view as? FTHConfirmationSubView {
-                records[(conview.nameTextField?.text!)!] = (dateFromString(string:(conview.dateTextField?.text)!, format: "yyyy-MM-dd"),0,0)
-            }
-//            records[((view as! FTHConfirmationSubView).nameTextField?.text)!] = (dateFromString(string: ((view as! FTHConfirmationSubView).dateTextField?.text)!, format: "yyyy-MM-dd"),0,0)
-            
+        for cell in cells {
+            records[(cell.nameTextField?.text!)!] = (dateFromString(string:(cell.dateTextField?.text)!, format: "yyyy-MM-dd"),0,0)
         }
-        
         updateRemoteDatabase(records)
     }
     
-    func changedDateEvent(sender:AnyObject?, textField:FUITextField){
+    func changedDateEvent(sender:AnyObject?, textField:UITextField){
         let dateSelecter: UIDatePicker = sender as! UIDatePicker
         textField.text = self.stringFromDate(date: dateSelecter.date as NSDate, format: "yyyy-MM-dd")
     }
@@ -111,9 +187,13 @@ class FTHConfirmationViewController: UIViewController {
                     
                     records[name] = (user_item_id, date)
                 }
-                
                 self.updateLocalDatabase(records)
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return false
     }
     
     func getAccessToken() -> String {
@@ -131,8 +211,26 @@ class FTHConfirmationViewController: UIViewController {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = format
         return formatter.date(from: string)! as NSDate
-}
+    }
+    
     func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {
         return CGRect(x: x, y: y, width: width, height: height)
+    }
+    
+    func didTapKanryoButton(sender: UIBarButtonItem) {
+        let selectedDateTextField = self.findFirstResponder()
+        selectedDateTextField?.resignFirstResponder()
+        selectedDateTextField?.text = self.stringFromDate(date: self.myDatePicker.date as NSDate, format: "yyyy-MM-dd")
+    }
+
+    func findFirstResponder() -> UITextField?
+    {
+        let cells = self.tableView.visibleCells as! Array<FTHConfrimationTableCell>
+        for cell in cells {
+            if cell.dateTextField?.isFirstResponder == true {
+                return cell.dateTextField
+            }
+        }
+        return nil
     }
 }
