@@ -77,10 +77,15 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
     }
     
     override func viewDidLoad() {
+        let conLabel = UILabel(frame: CGRect(x: 0, y: 50, width: self.view.bounds.size.width , height: 50))
+        conLabel.textAlignment = NSTextAlignment.center
+        conLabel.text = "食材の確認をしてください。"
+        conLabel.backgroundColor = UIColor.white
+        self.view.addSubview(conLabel)
         self.realm = try! Realm()
         super.viewDidLoad()
         self.tableView.allowsSelection = false
-        self.tableView.frame = CGRect(x:0, y:0, width:self.view.frame.size.width, height:self.view.frame.size.height)
+        self.tableView.frame = CGRect(x:0, y:100, width:self.view.frame.size.width, height:self.view.frame.size.height)
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(FTHConfrimationTableCell.self, forCellReuseIdentifier: "concell")
