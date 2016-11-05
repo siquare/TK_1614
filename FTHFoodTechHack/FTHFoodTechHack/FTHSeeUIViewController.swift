@@ -2,6 +2,7 @@ import UIKit
 import MGSwipeTableCell
 import RealmSwift
 import Alamofire
+import BRYXBanner
 
 class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -30,12 +31,18 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         backBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(FTHSeeUIViewController.onClick))
         self.navigationItem.leftBarButtonItem = backBtn
         
-        myTableView = UITableView(frame:CGRect(x:10, y: 50, width:self.view.bounds.width - 20, height:self.view.bounds.height - 100))
+        myTableView = UITableView(frame:CGRect(x:20, y: 50, width:self.view.bounds.width - 40, height:self.view.bounds.height - 100))
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "FoodCell")
         myTableView.dataSource = self
         myTableView.delegate = self
+        myTableView.separatorColor = UIColor.clear
         
         self.view.addSubview(myTableView)
+        
+        //in-app notification
+        let banner = Banner(title: "賞味期限切れ間近の食品があります", subtitle:tableViewData[0].name, image: UIImage(named: "Icon"), backgroundColor: UIColor(red:48.00/255.0, green:174.0/255.0, blue:51.5/255.0, alpha:1.000))
+        banner.dismissesOnTap = true
+        banner.show(duration: 3.0)
     }
     
     override func didReceiveMemoryWarning() {
@@ -53,6 +60,9 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell =  MGSwipeTableCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "FoodCell")
+        cell.contentView.layer.borderColor = defaultRedColor.cgColor
+        cell.contentView.layer.borderWidth = 2.0
+        cell.contentView.layer.cornerRadius = 10.0
 
         cell.textLabel?.text = self.tableViewData[indexPath.row].name + "賞味期限切れ"
         cell.backgroundColor = UIColor.white

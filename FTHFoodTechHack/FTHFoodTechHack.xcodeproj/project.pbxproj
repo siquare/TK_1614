@@ -75,6 +75,7 @@
 		452B40BA1DC55329003080A0 /* FTHConfirmationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTHConfirmationViewController.swift; sourceTree = "<group>"; };
 		452B40BC1DC55955003080A0 /* FTHConfrimationTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTHConfrimationTableCell.swift; sourceTree = "<group>"; };
 		45366A021DBEEFFA00E1974B /* FTHAddChildViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTHAddChildViewController.swift; sourceTree = "<group>"; };
+		45CAEC051DCDFEFA0080869E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		45FC26FE1DBB569500E4C333 /* FTHFoodTechHack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FTHFoodTechHack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45FC27011DBB569500E4C333 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45FC27031DBB569500E4C333 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +144,7 @@
 		1540B034449F35BB00E005A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				45CAEC051DCDFEFA0080869E /* AudioToolbox.framework */,
 				462D043F1DC530E600BDE62B /* AVFoundation.framework */,
 				BDC1551EAFD06720EDA62F7A /* Pods_FTHFoodTechHack.framework */,
 				DC3303515FD8507C746B47E8 /* Pods_FTHFoodTechHackTests.framework */,
