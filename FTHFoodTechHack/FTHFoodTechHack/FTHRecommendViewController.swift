@@ -19,14 +19,14 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         self.realm = try! Realm()
         bestBeforeFood = (self.realm?.objects(RealmFood.self).sorted(byProperty:"date").first)!
         
-        let bestBeforeDateLabel = UILabel(frame: CGRect(x: 10, y: 80, width: self.view.bounds.size.width, height: 50))
+        let bestBeforeDateLabel = UILabel(frame: CGRect(x: 30, y: 80, width: self.view.bounds.size.width, height: 50))
         bestBeforeDateLabel.textAlignment = NSTextAlignment.left
         let labeltext: [String] = ["賞味期限間近の食品：", (bestBeforeFood?.name)!]
         bestBeforeDateLabel.text = labeltext.joined(separator: " ")
         self.view.addSubview(bestBeforeDateLabel)
         
         
-        let otherFoodLabel = UILabel(frame: CGRect(x: 10, y: 130, width: 150, height: 50))
+        let otherFoodLabel = UILabel(frame: CGRect(x: 30, y: 130, width: 150, height: 50))
         otherFoodLabel.textAlignment = NSTextAlignment.left
         otherFoodLabel.text = "食品を追加する: "
         self.view.addSubview(otherFoodLabel)
@@ -39,7 +39,7 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         self.view.addSubview(additionalFoodtextField)
         
         let trybutton = FUIButton()
-        trybutton.frame = CGRectMake(30, otherFoodLabel.frame.maxY + 10, self.view.frame.size.width - 60, 50)
+        trybutton.frame = CGRectMake(30, otherFoodLabel.frame.maxY + 30, self.view.frame.size.width - 60, 50)
         trybutton.buttonColor = defaultRedColor
         trybutton.shadowColor = UIColor.red
         trybutton.shadowHeight = 3.0
@@ -54,7 +54,7 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         //using WKWebview to show the recomendation recipies though Rakuten recipi.
         _webkitview?.navigationDelegate = self
         
-        self._webkitview = WKWebView(frame:CGRectMake(10, trybutton.frame.maxY + 10, self.view.bounds.size.width - 10, self.view.bounds.size.height))
+        self._webkitview = WKWebView(frame:CGRectMake(10, trybutton.frame.maxY + 30, self.view.bounds.size.width - 10, self.view.bounds.size.height))
         
         self.showWebViewWithKeyWords(keywords: [(self.bestBeforeFood?.name)!])
     }

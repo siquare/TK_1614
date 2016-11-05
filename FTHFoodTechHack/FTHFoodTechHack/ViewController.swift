@@ -4,6 +4,7 @@ import Alamofire
 import FlatUIKit
 
 class ViewController: UIViewController {
+    let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
     
     override func viewDidLoad() {
 		super.viewDidLoad()
@@ -17,25 +18,50 @@ class ViewController: UIViewController {
         seeButton.backgroundColor = UIColor.red
         seeButton.setBackgroundImage(#imageLiteral(resourceName: "seecontent"), for: UIControlState.normal)
         seeButton.addTarget(self, action: #selector(didTapSeeButton), for: .touchUpInside)
+        
+        //adding buttonLabel
+        let seeButtonLabel = UILabel(frame:CGRect(x:0, y:seeButton.frame.size.height - 50, width:seeButton.frame.width, height:50))
+        seeButtonLabel.text = "冷蔵庫の中身を見る"
+        seeButtonLabel.textColor = UIColor.white
+        seeButtonLabel.font = UIFont.systemFont(ofSize: CGFloat(20))
+        seeButtonLabel.textAlignment = NSTextAlignment.center
+        seeButtonLabel.backgroundColor = defaultRedColor
+        seeButton.addSubview(seeButtonLabel)
         self.view.addSubview(seeButton)
         
         let addButton = UIButton(frame: CGRect(x: 50, y: 100 + seeButton.frame.height + 30, width: self.view.bounds.size.width - 100, height: self.view.bounds.size.height/5))
         addButton.backgroundColor = UIColor.red
         addButton.setBackgroundImage(#imageLiteral(resourceName: "addcontent"), for: UIControlState.normal)
         addButton.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
+        
+        let addButtonLabel = UILabel(frame:CGRect(x:0, y:seeButton.frame.size.height - 50, width:seeButton.frame.width, height:50))
+        addButtonLabel.text = "冷蔵庫に食材を追加する"
+        addButtonLabel.textColor = UIColor.white
+        addButtonLabel.font = UIFont.systemFont(ofSize: CGFloat(20))
+        addButtonLabel.textAlignment = NSTextAlignment.center
+        addButtonLabel.backgroundColor = defaultRedColor
+        addButton.addSubview(addButtonLabel)
         self.view.addSubview(addButton)
         
         let recButton = UIButton(frame: CGRect(x: 50, y: addButton.frame.maxY + 30, width: self.view.bounds.size.width - 100, height: self.view.bounds.size.height/5))
         recButton.backgroundColor = UIColor.red
         recButton.setBackgroundImage(#imageLiteral(resourceName: "seerecomendation"), for: UIControlState.normal)
         recButton.addTarget(self, action: #selector(didTapRecommendButton), for: .touchUpInside)
+        
+        let recButtonLabel = UILabel(frame:CGRect(x:0, y:seeButton.frame.size.height - 50, width:seeButton.frame.width, height:50))
+        recButtonLabel.text = "おすすめレシピを見る"
+        recButtonLabel.textColor = UIColor.white
+        recButtonLabel.font = UIFont.systemFont(ofSize: CGFloat(20))
+        recButtonLabel.textAlignment = NSTextAlignment.center
+        recButtonLabel.backgroundColor = defaultRedColor
+        recButton.addSubview(recButtonLabel)
         self.view.addSubview(recButton)
         
-        let addDeviceQRButton = FUIButton(frame:CGRect(x:50, y:recButton.frame.maxY + 30, width: 100, height: 60))
+        let addDeviceQRButton = FUIButton(frame:CGRect(x:50, y:recButton.frame.maxY + 30, width: self.view.bounds.size.width - 100, height: 50))
         addDeviceQRButton.shadowColor = UIColor.red
         addDeviceQRButton.buttonColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
-        addDeviceQRButton.titleLabel?.text = "AddDevice"
-        addDeviceQRButton.titleLabel?.tintColor = UIColor.black
+        addDeviceQRButton.setTitle("タブレットを追加する", for: .normal)
+        addDeviceQRButton.setTitleColor(UIColor.white, for: .normal)
         addDeviceQRButton.addTarget(self, action: #selector(didTapQrButton), for: .touchUpInside)
         self.view.addSubview(addDeviceQRButton)
     }
