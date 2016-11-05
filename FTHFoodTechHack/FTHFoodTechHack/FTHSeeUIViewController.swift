@@ -79,16 +79,6 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
             return true
         })]
         
-//        cell.leftButtons = [MGSwipeButton(title: "LINEに送る", icon: UIImage(named:"fav.png"), backgroundColor: UIColor.green, callback: {
-//            (sender: MGSwipeTableCell!) -> Bool in
-//            /*TODO(totem):lineに伝送するやつお願いします。商品名はcell.textLabel?.textで情報が取れます。
-//             i.e.
-//             print("%s", cell.textLabel?.text) ->"ほうれん草"
-//             */
-//            return true
-//            })]
-//        cell.leftSwipeSettings.transition = MGSwipeTransition.rotate3D
-
         return cell
     }
     
