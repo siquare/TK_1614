@@ -18,10 +18,9 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         self.realm = try! Realm()
         bestBeforeFood = (self.realm?.objects(RealmFood.self).sorted(byProperty:"date").first)!
         
-        let bestBeforeDate:FTHFoodModel = self.fthRefrigeratorModel.expiringFoodStocks[0]
-        var bestBeforeDateLabel = UILabel(frame: CGRect(x: 10, y: 80, width: self.view.bounds.size.width, height: 50))
+        let bestBeforeDateLabel = UILabel(frame: CGRect(x: 10, y: 80, width: self.view.bounds.size.width, height: 50))
         bestBeforeDateLabel.textAlignment = NSTextAlignment.left
-        let labeltext =  ["賞味期限間近の食品：", bestBeforeDate.name]
+        let labeltext: [String] = ["賞味期限間近の食品：", (bestBeforeFood?.name)!]
         bestBeforeDateLabel.text = labeltext.joined(separator: " ")
         self.view.addSubview(bestBeforeDateLabel)
 
@@ -40,7 +39,7 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
          self.view.addSubview(additionalFoodtextField)
         
         let trybutton = FUIButton()
-        trybutton.frame = CGRectMake(10, otherFoodLabel.frame.maxY + 10, self.view.frame.size.width - 20, 50)
+        trybutton.frame = CGRectMake(30, otherFoodLabel.frame.maxY + 10, self.view.frame.size.width - 60, 50)
         trybutton.buttonColor = defaultRedColor
         trybutton.shadowColor = UIColor.red
         trybutton.shadowHeight = 3.0
@@ -93,5 +92,10 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
     
     func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {
         return CGRect(x: x, y: y, width: width, height: height)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return false
     }
 }
