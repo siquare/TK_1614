@@ -23,7 +23,7 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         let labeltext: [String] = ["賞味期限間近の食品：", (bestBeforeFood?.name)!]
         bestBeforeDateLabel.text = labeltext.joined(separator: " ")
         self.view.addSubview(bestBeforeDateLabel)
-
+        
         
         let otherFoodLabel = UILabel(frame: CGRect(x: 10, y: 130, width: 150, height: 50))
         otherFoodLabel.textAlignment = NSTextAlignment.left
@@ -35,8 +35,7 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         self.additionalFoodtextField.textFieldColor = UIColor.clear
         self.additionalFoodtextField.layer.borderColor = UIColor.gray.cgColor
         self.additionalFoodtextField.layer.borderWidth = 1.0
-        
-         self.view.addSubview(additionalFoodtextField)
+        self.view.addSubview(additionalFoodtextField)
         
         let trybutton = FUIButton()
         trybutton.frame = CGRectMake(30, otherFoodLabel.frame.maxY + 10, self.view.frame.size.width - 60, 50)
@@ -51,14 +50,12 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         trybutton.addTarget(self, action: #selector(didTapAddSearchButton), for:.touchUpInside)
         self.view.addSubview(trybutton)
         
-        //using WKWebview to show the recomendation recipies though Rakuten recipi. 
+        //using WKWebview to show the recomendation recipies though Rakuten recipi.
         _webkitview?.navigationDelegate = self
         
         self._webkitview = WKWebView(frame:CGRectMake(10, trybutton.frame.maxY + 10, self.view.bounds.size.width - 10, self.view.bounds.size.height))
-        //this is a hack.need to be fixed, letting FTH searchiing w multiple materials.
-
-        self.showWebViewWithKeyWords(keywords: [(self.bestBeforeFood?.name)!])
         
+        self.showWebViewWithKeyWords(keywords: [(self.bestBeforeFood?.name)!])
     }
     
     func didTapAddSearchButton(sender: UIButton){
@@ -67,7 +64,6 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
             keywords.append(self.additionalFoodtextField.text)
         }
         self.showWebViewWithKeyWords(keywords: keywords as! [String])
-
     }
     
     func showWebViewWithKeyWords(keywords:[String]){
@@ -90,12 +86,13 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         self.dismiss(animated: true, completion: nil)
     }
     
-    func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {
-        return CGRect(x: x, y: y, width: width, height: height)
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
         return false
     }
+    
+    func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {
+        return CGRect(x: x, y: y, width: width, height: height)
+    }
+    
 }
