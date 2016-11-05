@@ -3,109 +3,79 @@ import RealmSwift
 import FlatUIKit
 
 class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlertViewDelegate{
-
-    let foodTextField = FUITextField()
-    let numTextField = FUITextField()
     let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
+    let foodTextField = FTHCustoizedTextField(frame:CGRect.zero, isDate:false)
+    let priceTextField = FTHCustoizedTextField(frame:CGRect.zero, isDate:false)
     var toolBar = UIToolbar()
-    var dateTextField = FUITextField()
+    var dateTextField = FTHCustoizedTextField(frame:CGRect.zero, isDate:true)
     static let textFieldLeftMargin = 30
-
-    override func viewDidLoad() {
     
-        self.view.backgroundColor = UIColor.white
-        let foodLabel = UILabel(frame:CGRect(x: 30, y: 100, width: 80 , height: 50))
-         foodLabel.textAlignment = NSTextAlignment.center
-
-         foodLabel.text = "食材名"
-        self.view.addSubview(foodLabel)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         self.title = "食材を追加する"
-        foodTextField.frame = CGRectMake(foodLabel.frame.maxX, 100, 200 , 50)
-        foodTextField.delegate = self
-        foodTextField.textFieldColor = UIColor.clear
-        foodTextField.backgroundColor = UIColor.white
-        foodTextField.borderColor = defaultRedColor
-        foodTextField.borderWidth = 2.0
-        foodTextField.cornerRadius = 3.0
-        foodTextField.layer.cornerRadius = 3.0
+        self.view.backgroundColor = UIColor.white
         
-        foodTextField.layer.borderColor = UIColor.gray.cgColor
-        foodTextField.layer.borderWidth = 1.0
-        self.view.addSubview(foodTextField)
+        //Initialize Labels
+        let foodLabel = UILabel(frame:CGRect(x: 30, y: 100, width: 80 , height: 50))
+        foodLabel.textAlignment = NSTextAlignment.center
+        foodLabel.text = "食材名"
+        self.view.addSubview(foodLabel)
         
-        let numLabel = UILabel(frame: CGRect(x: 30, y: foodLabel.frame.maxY + 10, width: 80 , height: 50))
-        numLabel.textAlignment = NSTextAlignment.center
-        numLabel.text = "価格"
-        self.view.addSubview(numLabel)
+        let priceLabel = UILabel(frame: CGRect(x: 30, y: foodLabel.frame.maxY + 10, width: 80 , height: 50))
+        priceLabel.textAlignment = NSTextAlignment.center
+        priceLabel.text = "価格"
+        self.view.addSubview(priceLabel)
         
-        numTextField.frame = CGRectMake(foodLabel.frame.maxX,foodLabel.frame.maxY + 10, 200 , 50)
-        numTextField.delegate = self
-        numTextField.textFieldColor = UIColor.clear
-        numTextField.borderColor = defaultRedColor
-        numTextField.borderWidth = 2.0
-        numTextField.cornerRadius = 3.0
-        numTextField.layer.borderColor = UIColor.gray.cgColor
-        numTextField.layer.borderWidth = 1.0
-        numTextField.layer.cornerRadius = 3.0
-        self.view.addSubview(numTextField)
-        
-        let dateLabel = UILabel(frame: CGRect(x: 30, y: numLabel.frame.maxY + 10, width: 80 , height: 50))
+        let dateLabel = UILabel(frame: CGRect(x: 30, y: priceLabel.frame.maxY + 10, width: 80 , height: 50))
         dateLabel.textAlignment = NSTextAlignment.center
         dateLabel.text = "賞味期限"
         self.view.addSubview(dateLabel)
         
-        dateTextField.frame = CGRectMake(foodLabel.frame.maxX, numLabel.frame.maxY + 10, 200 , 50)
+        //Initialize textField for inputs
+        foodTextField.frame = CGRect(x:foodLabel.frame.maxX, y:100, width:200 ,height: 50)
+        foodTextField.delegate = self
+        self.view.addSubview(foodTextField)
+        
+        priceTextField.frame = CGRect(x:foodLabel.frame.maxX,y:foodLabel.frame.maxY + 10, width:200 , height:50)
+        priceTextField.delegate = self
+        self.view.addSubview(priceTextField)
+        
+        dateTextField.frame = CGRect(x:foodLabel.frame.maxX, y:priceLabel.frame.maxY + 10, width:200 , height:50)
         dateTextField.delegate = self
-        dateTextField.textFieldColor = UIColor.clear
-        dateTextField.borderColor = defaultRedColor
-        dateTextField.borderWidth = 2.0
-        dateTextField.cornerRadius = 3.0
-        dateTextField.layer.borderColor = UIColor.gray.cgColor
-        dateTextField.layer.borderWidth = 1.0
-        dateTextField.layer.cornerRadius = 3.0
+        dateTextField.inputAccessoryView = toolBar
         
-        self.view.addSubview(dateTextField)
-        
-        let myDatePicker = UIDatePicker()
-        myDatePicker.addTarget(self, action: #selector(changedDateEvent), for: UIControlEvents.valueChanged)
-        myDatePicker.datePickerMode = UIDatePickerMode.date
-        dateTextField.inputView = myDatePicker
-
-        toolBar.frame = CGRectMake(0, self.view.frame.size.height/6, self.view.frame.size.width, 40.0)
+        //configure toolBar
+        toolBar.frame = CGRect(x:0, y:self.view.frame.size.height/6, width:self.view.frame.size.width, height:40.0)
         toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
         toolBar.barStyle = .blackTranslucent
         toolBar.tintColor = UIColor.white
         toolBar.backgroundColor = UIColor.black
         
-        dateTextField.inputAccessoryView = self.toolBar
-        
-        let toolBarBtn = UIBarButtonItem(title: "完了", style: .bordered, target: self, action: #selector(didTapKanryoButton))//need to implement kanryo
-        
+        let toolBarBtn = UIBarButtonItem(title: "完了", style: .bordered, target: self, action: #selector(didTapKanryoButton))
         toolBarBtn.tag = 1
         toolBar.items = [toolBarBtn]
+        self.view.addSubview(dateTextField)
         
-        let trybutton = FUIButton()
-        trybutton.frame = CGRectMake(30, dateTextField.frame.maxY + 30, self.view.bounds.size.width - 60, 50)
-        trybutton.buttonColor =  UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
-        trybutton.shadowColor = UIColor.red
-        trybutton.shadowHeight = 3.0
-        trybutton.cornerRadius = 6.0
-        
-        trybutton.titleLabel?.textColor = UIColor.black
-
-        trybutton.setTitle("追加する", for: UIControlState())
-        trybutton.addTarget(self, action: #selector(didTapAddButton), for:.touchUpInside)
-        self.view.addSubview(trybutton)
+        let addbutton = FUIButton()
+        addbutton.frame = CGRect(x:30, y:dateTextField.frame.maxY + 30, width:self.view.bounds.size.width - 60, height:50)
+        addbutton.buttonColor =  UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
+        addbutton.shadowColor = UIColor.red
+        addbutton.shadowHeight = 3.0
+        addbutton.cornerRadius = 6.0
+        addbutton.titleLabel?.textColor = UIColor.black
+        addbutton.setTitle("追加する", for: UIControlState())
+        addbutton.addTarget(self, action: #selector(didTapAddButton), for:.touchUpInside)
+        self.view.addSubview(addbutton)
     }
-
+    
     override func didReceiveMemoryWarning() {}
-
+    
     func changedDateEvent(sender:AnyObject?){
         let dateSelecter: UIDatePicker = sender as! UIDatePicker
         self.dateTextField.text = self.stringFromDate(date: dateSelecter.date as NSDate, format: "yyyy年MM月dd日")
     }
-
+    
     //add food to local date && dismiss screen
     func didTapAddButton(sender: UIButton){
         let realm = try! Realm()
@@ -121,11 +91,7 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
         selectedTextField?.resignFirstResponder()
         self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
-		// TODO: サーバのデータを追加する
-    }
-    
-    func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {
-        return CGRect(x: x, y: y, width: width, height: height)
+        // TODO: サーバのデータを追加する
     }
     
     func dateFromString(string: String, format: String) -> NSDate {

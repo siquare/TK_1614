@@ -8,14 +8,12 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
     var realm: Realm?
     let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
     var fthRefrigeratorModel = FTHRefrigeratorModel()
-    var additionalFoodtextField = FUITextField()
+    var additionalFoodtextField = FTHCustoizedTextField(frame:CGRect.zero, isDate:false)
     var bestBeforeFood : RealmFood?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.title = "おすすめレシピ"
-        
         self.view.backgroundColor = UIColor.white
         
         //賞味期限近い食品の取得
@@ -33,12 +31,8 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         otherFoodLabel.text = "食品を追加する"
         self.view.addSubview(otherFoodLabel)
         
-        self.additionalFoodtextField = FUITextField(frame: CGRect(x: otherFoodLabel.frame.maxX, y: otherFoodLabel.frame.minY, width: self.view.bounds.size.width - otherFoodLabel.frame.maxX - 30, height: 40))
+        self.additionalFoodtextField.frame = CGRect(x: otherFoodLabel.frame.maxX, y: otherFoodLabel.frame.minY, width: self.view.bounds.size.width - otherFoodLabel.frame.maxX - 30, height: 40)
         additionalFoodtextField.delegate = self
-        self.additionalFoodtextField.textFieldColor = UIColor.clear
-        self.additionalFoodtextField.layer.borderColor = UIColor.gray.cgColor
-        self.additionalFoodtextField.layer.borderWidth = 1.0
-        self.additionalFoodtextField.layer.cornerRadius = 3.0
         self.view.addSubview(additionalFoodtextField)
         
         let trybutton = FUIButton(frame : CGRect(x:30, y:otherFoodLabel.frame.maxY + 30, width:self.view.frame.size.width - 60, height:50))
@@ -48,7 +42,6 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         trybutton.cornerRadius = 6.0
         
         trybutton.titleLabel?.textColor = UIColor.black
-        
         trybutton.setTitle("追加する", for: UIControlState())
         trybutton.addTarget(self, action: #selector(didTapAddSearchButton), for:.touchUpInside)
         self.view.addSubview(trybutton)

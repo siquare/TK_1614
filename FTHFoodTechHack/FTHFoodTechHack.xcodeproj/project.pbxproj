@@ -11,6 +11,7 @@
 		452B40BB1DC55329003080A0 /* FTHConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452B40BA1DC55329003080A0 /* FTHConfirmationViewController.swift */; };
 		452B40BD1DC55955003080A0 /* FTHConfrimationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452B40BC1DC55955003080A0 /* FTHConfrimationTableCell.swift */; };
 		45366A031DBEEFFA00E1974B /* FTHAddChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45366A021DBEEFFA00E1974B /* FTHAddChildViewController.swift */; };
+		45CAEC081DCE3B660080869E /* FTHCustomizedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CAEC071DCE3B660080869E /* FTHCustomizedTextField.swift */; };
 		45FC27021DBB569500E4C333 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC27011DBB569500E4C333 /* AppDelegate.swift */; };
 		45FC27041DBB569500E4C333 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC27031DBB569500E4C333 /* ViewController.swift */; };
 		45FC27071DBB569500E4C333 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45FC27051DBB569500E4C333 /* Main.storyboard */; };
@@ -76,6 +77,7 @@
 		452B40BC1DC55955003080A0 /* FTHConfrimationTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTHConfrimationTableCell.swift; sourceTree = "<group>"; };
 		45366A021DBEEFFA00E1974B /* FTHAddChildViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTHAddChildViewController.swift; sourceTree = "<group>"; };
 		45CAEC051DCDFEFA0080869E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		45CAEC071DCE3B660080869E /* FTHCustomizedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTHCustomizedTextField.swift; sourceTree = "<group>"; };
 		45FC26FE1DBB569500E4C333 /* FTHFoodTechHack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FTHFoodTechHack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45FC27011DBB569500E4C333 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45FC27031DBB569500E4C333 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				45FC27051DBB569500E4C333 /* Main.storyboard */,
 				45366A021DBEEFFA00E1974B /* FTHAddChildViewController.swift */,
 				45FC273C1DBC51D400E4C333 /* FTHRecommendViewController.swift */,
+				45CAEC071DCE3B660080869E /* FTHCustomizedTextField.swift */,
 				45FC27361DBB7B6A00E4C333 /* FTHSeeUIViewController.swift */,
 				45FC273A1DBC4F2F00E4C333 /* FTHAddViewController.swift */,
 				452B40BA1DC55329003080A0 /* FTHConfirmationViewController.swift */,
@@ -526,6 +529,7 @@
 				45FC27391DBC472600E4C333 /* FTHRefrigeratorModel.swift in Sources */,
 				45FC27021DBB569500E4C333 /* AppDelegate.swift in Sources */,
 				45124DFA1DC510A7005854B1 /* RealmFood.swift in Sources */,
+				45CAEC081DCE3B660080869E /* FTHCustomizedTextField.swift in Sources */,
 				452B40BB1DC55329003080A0 /* FTHConfirmationViewController.swift in Sources */,
 				45FC27371DBB7B6A00E4C333 /* FTHSeeUIViewController.swift in Sources */,
 				45FC273B1DBC4F2F00E4C333 /* FTHAddViewController.swift in Sources */,
