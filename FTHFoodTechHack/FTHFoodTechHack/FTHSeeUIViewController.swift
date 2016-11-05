@@ -28,7 +28,6 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         self.view.backgroundColor = UIColor.white
         // Do any additional setup after loading the view, typically from a nib.
         self.title = "冷蔵庫の中身を見る"
-        backBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(FTHSeeUIViewController.onClick))
         self.navigationItem.leftBarButtonItem = backBtn
         
         myTableView = UITableView(frame:CGRect(x:20, y: 50, width:self.view.bounds.width - 40, height:self.view.bounds.height - 100))
@@ -78,12 +77,7 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         
         return cell
     }
-    
-    func onClick() {
-        let home = ViewController()
-        self.navigationController?.pushViewController(home, animated: true)
-    }
-	
+
 	func deleteRemoteData(_ item : FTHFoodModel) {
 		let accessToken = self.getAccessToken()
 		
@@ -110,7 +104,4 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
 		return ud.object(forKey: "x-access-token") as! String
 	}
     
-    @IBAction func didTapBackButton(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-    }
 }

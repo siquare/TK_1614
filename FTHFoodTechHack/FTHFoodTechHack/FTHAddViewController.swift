@@ -10,7 +10,7 @@ class FTHAddViewController: UIViewController, UIImagePickerControllerDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        self.title = "冷蔵庫に食品を追加する"
         self.view.backgroundColor = UIColor.white
         let addLabel = UILabel(frame: CGRect(x: 10, y: 100, width: self.view.bounds.size.width , height: 50))
         addLabel.textAlignment = NSTextAlignment.center

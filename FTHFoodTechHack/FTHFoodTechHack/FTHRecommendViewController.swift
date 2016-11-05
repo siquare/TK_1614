@@ -14,6 +14,7 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "おすすめレシピを見る"
         self.view.backgroundColor = UIColor.white
         self.realm = try! Realm()
         bestBeforeFood = (self.realm?.objects(RealmFood.self).sorted(byProperty:"date").first)!
