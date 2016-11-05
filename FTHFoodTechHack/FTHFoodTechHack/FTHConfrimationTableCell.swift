@@ -12,23 +12,24 @@ class FTHConfrimationTableCell: UITableViewCell {
         let reuseIdentifier = reusedIdentifier
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.layer.backgroundColor = defaultRedColor.cgColor
         nameTextField = UITextField()
         dateTextField = UITextField()
         priceTextField = UITextField()
         nameTextField?.frame = CGRect(x:10, y:frame.minY + 5, width:frame.size.width/3, height:frame.size.height - 10)
         nameTextField?.layer.cornerRadius = 10.0
         
-        nameTextField?.backgroundColor = defaultRedColor
+        nameTextField?.backgroundColor = UIColor.white
         addSubview(nameTextField!)
         
         dateTextField?.frame = CGRect(x:(self.nameTextField?.frame.maxX)! + 30, y:frame.minY + 5, width:frame.size.width/3 , height:frame.size.height - 10)
-        dateTextField?.backgroundColor = defaultRedColor
+        dateTextField?.backgroundColor = UIColor.white
         dateTextField?.layer.cornerRadius = 10.0
         self.addSubview(dateTextField!)
 
         priceTextField?.frame = CGRect(x:(self.dateTextField?.frame.maxX)! + 30, y:frame.minY + 5, width:frame.size.width/4, height:frame.size.height - 10)
 
-        priceTextField?.backgroundColor = defaultRedColor
+        priceTextField?.backgroundColor = UIColor.white
         priceTextField?.layer.cornerRadius = 10.0
         self.addSubview(priceTextField!)
     }

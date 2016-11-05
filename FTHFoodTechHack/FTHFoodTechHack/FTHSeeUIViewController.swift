@@ -8,6 +8,7 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
     var fthRefrigeratorModel = FTHRefrigeratorModel()
     var backBtn: UIBarButtonItem!
     var realm: Realm?
+    let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
     //let mySections: NSArray = ["賞味期限間近の食品", "冷蔵庫内の食品"]
     var tableViewData : [FTHFoodModel] = []
     
@@ -54,6 +55,7 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         let cell =  MGSwipeTableCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "FoodCell")
 
         cell.textLabel?.text = self.tableViewData[indexPath.row].name + "賞味期限切れ"
+        cell.backgroundColor = UIColor.white
          
         //implemented left and right buttons to enable users to remove/send line to fams.
         cell.rightButtons = [MGSwipeButton(title: "削除する", icon: UIImage(named:"check.png"), backgroundColor: UIColor.red, callback: {

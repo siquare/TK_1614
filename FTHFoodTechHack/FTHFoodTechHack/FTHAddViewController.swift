@@ -57,7 +57,7 @@ class FTHAddViewController: UIViewController, UIImagePickerControllerDelegate, U
     func pickImageFromCamera() {
         let myPickerController = UIImagePickerController()
         myPickerController.delegate = self;
-        myPickerController.sourceType = UIImagePickerControllerSourceType.camera
+        myPickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
         
         self.present(myPickerController, animated: true, completion: nil)
     }

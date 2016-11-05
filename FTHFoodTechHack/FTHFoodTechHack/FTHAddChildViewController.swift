@@ -77,12 +77,10 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
         trybutton.setTitle("追加する", for: UIControlState())
         trybutton.addTarget(self, action: #selector(didTapAddButton), for:.touchUpInside)
         self.view.addSubview(trybutton)
-        
     }
 
     override func didReceiveMemoryWarning() {}
-    
-    
+
     func changedDateEvent(sender:AnyObject?){
         let dateSelecter: UIDatePicker = sender as! UIDatePicker
         self.dateTextField.text = self.stringFromDate(date: dateSelecter.date as NSDate, format: "yyyy年MM月dd日")
