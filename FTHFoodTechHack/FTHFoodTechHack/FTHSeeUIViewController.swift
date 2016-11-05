@@ -1,14 +1,23 @@
 import UIKit
 import MGSwipeTableCell
+import RealmSwift
 
 class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var fthRefrigeratorModel = FTHRefrigeratorModel()
+    //var fthRefrigeratorModel = FTHRefrigeratorModel()
     var backBtn: UIBarButtonItem!
-    let mySections: NSArray = ["賞味期限間近の食品", "冷蔵庫内の食品"]
+    //let mySections: NSArray = ["賞味期限間近の食品", "冷蔵庫内の食品"]
+    var tableViewData : [(name:String, date:NSDate, price:Int)] = []
+    
     fileprivate var myTableView: UITableView!
     
     override func viewDidLoad() {
+        
+        let realm = try! Realm()
+        for food in realm.objects(RealmFood.self).sorted(byProperty: "date") {
+            self.tableViewData.append((name:food.name, date:food.date, price:food.price))
+        }
+        
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         // Do any additional setup after loading the view, typically from a nib.
@@ -17,7 +26,6 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationItem.leftBarButtonItem = backBtn
         
         myTableView = UITableView(frame:CGRect(x:10, y: 50, width:self.view.bounds.width - 20, height:self.view.bounds.height - 100))
-        
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "FoodCell")
         myTableView.dataSource = self
         myTableView.delegate = self
@@ -31,37 +39,24 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     //set secton nums
     func numberOfSections(in tableView: UITableView) -> Int {
-        return mySections.count
-    }
-    //set sectiontitle
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return mySections[section] as? String
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return fthRefrigeratorModel.expiringFoodStocks.count
-        } else if section == 1 {
-            return fthRefrigeratorModel.normalFoodStocks.count
-        } else {
-            return 0
-        }
+        return self.tableViewData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell =  MGSwipeTableCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "FoodCell")
 
-        if (indexPath as NSIndexPath).section == 0 {
-            cell.textLabel?.text = fthRefrigeratorModel.expiringFoodStocks[(indexPath as NSIndexPath).row].name + " Expiration date : "+String(describing: fthRefrigeratorModel.expiringFoodStocks[(indexPath as NSIndexPath).row].date)
-        } else if (indexPath as NSIndexPath).section == 1 {
-            cell.textLabel?.text = fthRefrigeratorModel.normalFoodStocks[(indexPath as NSIndexPath).row].name + " Expiration date : "+String(describing: fthRefrigeratorModel.normalFoodStocks[(indexPath as NSIndexPath).row].date)
-        }
-        
+        cell.textLabel?.text = self.tableViewData[indexPath.row].name + "賞味期限切れ"
+         
         //implemented left and right buttons to enable users to remove/send line to fams.
         cell.rightButtons = [MGSwipeButton(title: "削除する", icon: UIImage(named:"check.png"), backgroundColor: UIColor.red, callback: {
             (sender: MGSwipeTableCell!) -> Bool in
             
             //crashes when multiple objects are deleted at the same time. need to be fized before demo. 
+            /*
             if (indexPath as NSIndexPath).section == 0 {
                 self.fthRefrigeratorModel.expiringFoodStocks.remove(at:indexPath.row)
             } else {
@@ -69,6 +64,7 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }
             self.myTableView.deleteRows(at:[indexPath], with: .automatic)
+ */
             return true
         })]
         
@@ -81,7 +77,6 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
             return true
             })]
         cell.leftSwipeSettings.transition = MGSwipeTransition.rotate3D
-
         return cell
     }
     

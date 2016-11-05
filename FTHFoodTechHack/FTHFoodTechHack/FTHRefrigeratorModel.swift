@@ -29,4 +29,18 @@ open class FTHRefrigeratorModel :NSObject {
             }
         }
     }
+    
+    open func addFoodByTyping(name:String, date:NSDate, price:Int){
+
+        let realm = try! Realm()
+        
+        let realmFood = RealmFood()
+        realmFood.name = name
+        realmFood.date = date
+        realmFood.price = price
+        
+        try! realm.write{
+            realm.add(realmFood)
+        }
+    }
 }
