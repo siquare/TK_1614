@@ -1,24 +1,28 @@
 import UIKit
 import MGSwipeTableCell
 import RealmSwift
+import Alamofire
 
 class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    //var fthRefrigeratorModel = FTHRefrigeratorModel()
+    var fthRefrigeratorModel = FTHRefrigeratorModel()
     var backBtn: UIBarButtonItem!
+    var realm: Realm?
     //let mySections: NSArray = ["賞味期限間近の食品", "冷蔵庫内の食品"]
-    var tableViewData : [(name:String, date:NSDate, price:Int)] = []
+    var tableViewData : [FTHFoodModel] = []
     
     fileprivate var myTableView: UITableView!
     
     override func viewDidLoad() {
         
-        let realm = try! Realm()
-        for food in realm.objects(RealmFood.self).sorted(byProperty: "date") {
-            self.tableViewData.append((name:food.name, date:food.date, price:food.price))
+        super.viewDidLoad()
+        
+        self.realm = try! Realm()
+        for realmFood in (self.realm?.objects(RealmFood.self).sorted(byProperty: "date"))! {
+            let food = FTHFoodModel(object: realmFood)
+            self.tableViewData.append(food)
         }
         
-        super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         // Do any additional setup after loading the view, typically from a nib.
         self.title = "冷蔵庫の中身を見る"
@@ -54,29 +58,12 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         //implemented left and right buttons to enable users to remove/send line to fams.
         cell.rightButtons = [MGSwipeButton(title: "削除する", icon: UIImage(named:"check.png"), backgroundColor: UIColor.red, callback: {
             (sender: MGSwipeTableCell!) -> Bool in
-            
-            //crashes when multiple objects are deleted at the same time. need to be fized before demo. 
-            /*
-            if (indexPath as NSIndexPath).section == 0 {
-                self.fthRefrigeratorModel.expiringFoodStocks.remove(at:indexPath.row)
-            } else {
-                self.fthRefrigeratorModel.normalFoodStocks.remove(at: indexPath.row)
-                
-            }
+            	
             self.myTableView.deleteRows(at:[indexPath], with: .automatic)
- */
+            
             return true
         })]
         
-        cell.leftButtons = [MGSwipeButton(title: "LINEに送る", icon: UIImage(named:"fav.png"), backgroundColor: UIColor.green, callback: {
-            (sender: MGSwipeTableCell!) -> Bool in
-            /*TODO(totem):lineに伝送するやつお願いします。商品名はcell.textLabel?.textで情報が取れます。
-             i.e.             
-             print("%s", cell.textLabel?.text) ->"ほうれん草"
-             */
-            return true
-            })]
-        cell.leftSwipeSettings.transition = MGSwipeTransition.rotate3D
         return cell
     }
     
@@ -84,7 +71,21 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         let home = ViewController()
         self.navigationController?.pushViewController(home, animated: true)
     }
-    
+	
+	func deleteRemoteData(_ item : FTHFoodModel) {
+		let accessToken = self.getAccessToken()
+		
+		Alamofire.request("https://app.uthackers-app.tk/item/delete", method: .post, parameters: [
+			"user_item_id": [ item.id ]
+		], encoding: JSONEncoding.default, headers: [ "x-access-token" : accessToken ]).responseJSON { response in
+			print("Status Code: \(response.result.isSuccess)")
+		}
+	}
+	
+	func getAccessToken() -> String {
+		let ud = UserDefaults.standard
+		return ud.object(forKey: "x-access-token") as! String
+	}
     
     @IBAction func didTapBackButton(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)

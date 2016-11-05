@@ -53,12 +53,10 @@ class BestBeforeDate {
 			let json = JSON(object)
 			var table : [ String : (Int, NSDate, Int) ] = [ : ]
 			
-			json["item_master"].array!.forEach { elem in
-				let id = 0 // elem["item_id"].intValue
-				let name = elem["original_name"].string!
-                print(name)
-				let date = self.calcDeadlineFromRangeString(elem["default_expire_days"].intValue)
-                print(date)
+			json["item_master"].arrayValue.forEach {
+				let id = Int($0["user_item_id"].string!)!
+				let name = $0["original_name"].string!
+				let date = self.calcDeadlineFromRangeString($0["default_expire_days"].intValue)
 				let price = self.extractPriceFromFullText(original_text, word: name)
                 print(price)
 				
@@ -80,8 +78,6 @@ class BestBeforeDate {
 	}
 	
 	func extractPriceFromLine(_ _text: String, word: String) -> Int {
-        return 0
-        
 		let text = _text.replacingOccurrences(of: ",", with: "")
 		
 		do {
@@ -89,7 +85,7 @@ class BestBeforeDate {
 			let regex = try NSRegularExpression(pattern: pattern, options: [])
 			let results = regex.matches(in: text, options: [], range: NSMakeRange(0, text.characters.count))
 			
-			return 0 // Int((text as NSString).substring(with: results[0].range))!
+			return Int((text as NSString).substring(with: results[0].range))!
 		} catch _ as NSError {
 			return 0
         }

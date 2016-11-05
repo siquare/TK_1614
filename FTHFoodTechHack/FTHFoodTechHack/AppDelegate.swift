@@ -1,10 +1,24 @@
 import UIKit
 import CoreData
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var navigationController: UINavigationController?
+    
+    let config = Realm.Configuration(
+        schemaVersion: 2,  // Must be greater than previous version
+        migrationBlock: { migration, oldSchemaVersion in
+            if (oldSchemaVersion < 1) {
+                // minimally this can be empty
+            }
+            if (oldSchemaVersion < 2) {
+                // minimally this can be empty
+            }
+            print("Realm migration did run")  // Log to know migration was executed
+    })
+
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         

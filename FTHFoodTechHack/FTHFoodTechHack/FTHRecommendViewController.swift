@@ -9,7 +9,7 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         //why it doesnt show up when i directly move from VC.
-
+//need to be fixed
         let bestBeforeDate:FTHFoodModel = self.fthRefrigeratorModel.expiringFoodStocks[0]
         var bestBeforeDateLabel = UILabel(frame: CGRect(x: 10, y: 50, width: self.view.bounds.size.width, height: 50))
         bestBeforeDateLabel.textAlignment = NSTextAlignment.center
