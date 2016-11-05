@@ -75,7 +75,7 @@ class ViewController: UIViewController {
 			guard let object = response.result.value else { return }
 			let json = JSON(object)
 			
-			ud.set("x-access-token", forKey: json["user"]["access_token"].string!)
+			ud.set(json["user"]["access_token"].string!, forKey: "x-access-token")
 		}
 	}
 }
