@@ -65,7 +65,6 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
         myDatePicker.datePickerMode = UIDatePickerMode.date
         dateTextField.inputView = myDatePicker
 
-        
         let trybutton = FUIButton()
         trybutton.frame = CGRectMake(foodLabel.frame.maxX, dateTextField.frame.maxY + 10, 100, 50)
         trybutton.buttonColor =  UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
@@ -74,6 +73,7 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
         trybutton.cornerRadius = 6.0
         
         trybutton.titleLabel?.textColor = UIColor.black
+
         trybutton.setTitle("追加する", for: UIControlState())
         trybutton.addTarget(self, action: #selector(didTapAddButton), for:.touchUpInside)
         self.view.addSubview(trybutton)
@@ -107,10 +107,6 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
         return CGRect(x: x, y: y, width: width, height: height)
     }
     
-//    func changeLabelDate(date:NSDate) {
-//        self.dateTextField.text = self.dateFromString(date: date)
-//    }
-//    
     func dateFromString(string: String, format: String) -> NSDate {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = format

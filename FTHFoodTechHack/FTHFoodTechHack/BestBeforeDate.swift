@@ -46,7 +46,7 @@ class BestBeforeDate {
 	}
 	
 	func ServerSideRequest(_ nouns: [ String ], original_text : String) {
-		Alamofire.request("https://app.uthackers-app.tk/item/candidate", method: .post, parameters: [
+		Alamofire.request("https://app.uthackers-app.tk/item/candidates", method: .post, parameters: [
 			"query": [ "name": nouns ]
 		], encoding: JSONEncoding.default).responseJSON { response in
 			guard let object = response.result.value else { return }
@@ -56,8 +56,9 @@ class BestBeforeDate {
 			json["item_master"].arrayValue.forEach {
 				let id = Int($0["user_item_id"].string!)!
 				let name = $0["original_name"].string!
-				let date = self.calcDeadlineFromRangeString($0["default_expire_days"].string!)
+				let date = self.calcDeadlineFromRangeString($0["default_expire_days"].intValue)
 				let price = self.extractPriceFromFullText(original_text, word: name)
+                print(price)
 				
 				table[name] = (id, date, price)
 			}
@@ -77,17 +78,19 @@ class BestBeforeDate {
 	}
 	
 	func extractPriceFromLine(_ _text: String, word: String) -> Int {
+        return 0
+        
 		let text = _text.replacingOccurrences(of: ",", with: "")
 		
 		do {
-			let pattern = "([0-9]+)$"
+			let pattern = "([0-9]+)(^([0-9]+))$"
 			let regex = try NSRegularExpression(pattern: pattern, options: [])
 			let results = regex.matches(in: text, options: [], range: NSMakeRange(0, text.characters.count))
 			
-			return Int((text as NSString).substring(with: results[0].range))!
+			return 0 // Int((text as NSString).substring(with: results[0].range))!
 		} catch _ as NSError {
 			return 0
-		}
+        }
 	}
 	
 	func extractHeadNumber(_ d : String) -> Int {
@@ -112,8 +115,8 @@ class BestBeforeDate {
 		}
 	}
 	
-	func calcDeadlineFromRangeString(_ date: String) -> NSDate {
-		return NSDate(timeIntervalSinceNow: Double(date)! * Double(60 * 60 * 24))
+	func calcDeadlineFromRangeString(_ date: Int) -> NSDate {
+		return NSDate(timeIntervalSinceNow: Double(date) * Double(60 * 60 * 24))
 	}
 	
 	func resizeImage(_ imageSize: CGSize, image: UIImage) -> Data {

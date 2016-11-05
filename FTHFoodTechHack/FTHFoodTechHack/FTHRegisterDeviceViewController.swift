@@ -24,12 +24,10 @@ class FTHRegisterDeviceViewController : UIViewController, AVCaptureMetadataOutpu
 		} else {
 			registerDevice(results[0].messageString!)
 		}
-        let viewController = ViewController()
-        self.navigationController?.pushViewController(viewController, animated: true)
 	}
 	
 	func registerDevice(_ token : String) {
-		Alamofire.request("https://app.uthackers-app.tk/item/candidate", method: .post, parameters: [
+		Alamofire.request("https://app.uthackers-app.tk/user/connect", method: .post, parameters: [
 			"family" : [ "token" : token ]
 		], encoding: JSONEncoding.default).responseJSON { response in
 			guard let object = response.result.value else { return }
@@ -67,6 +65,7 @@ class FTHRegisterDeviceViewController : UIViewController, AVCaptureMetadataOutpu
             self.readQR(qrImageView.image!)
         }
         picker.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     
