@@ -78,8 +78,6 @@ class BestBeforeDate {
 	}
 	
 	func extractPriceFromLine(_ _text: String, word: String) -> Int {
-        return 0
-        
 		let text = _text.replacingOccurrences(of: ",", with: "")
 		
 		do {
@@ -87,7 +85,7 @@ class BestBeforeDate {
 			let regex = try NSRegularExpression(pattern: pattern, options: [])
 			let results = regex.matches(in: text, options: [], range: NSMakeRange(0, text.characters.count))
 			
-			return 0 // Int((text as NSString).substring(with: results[0].range))!
+			return Int((text as NSString).substring(with: results[0].range))!
 		} catch _ as NSError {
 			return 0
         }
