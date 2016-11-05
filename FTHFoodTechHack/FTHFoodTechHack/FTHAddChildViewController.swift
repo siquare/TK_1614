@@ -6,6 +6,8 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
 
     let foodTextField = FUITextField()
     let numTextField = FUITextField()
+    let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
+    var toolBar = UIToolbar()
     var dateTextField = FUITextField()
     static let textFieldLeftMargin = 30
 
@@ -23,7 +25,7 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
         foodTextField.delegate = self
         foodTextField.textFieldColor = UIColor.clear
         foodTextField.backgroundColor = UIColor.white
-        foodTextField.borderColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
+        foodTextField.borderColor = defaultRedColor
         foodTextField.borderWidth = 2.0
         foodTextField.cornerRadius = 3.0
         foodTextField.layer.cornerRadius = 3.0
@@ -40,7 +42,7 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
         numTextField.frame = CGRectMake(foodLabel.frame.maxX,foodLabel.frame.maxY + 10, 200 , 50)
         numTextField.delegate = self
         numTextField.textFieldColor = UIColor.clear
-        numTextField.borderColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
+        numTextField.borderColor = defaultRedColor
         numTextField.borderWidth = 2.0
         numTextField.cornerRadius = 3.0
         numTextField.layer.borderColor = UIColor.gray.cgColor
@@ -56,12 +58,13 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
         dateTextField.frame = CGRectMake(foodLabel.frame.maxX, numLabel.frame.maxY + 10, 200 , 50)
         dateTextField.delegate = self
         dateTextField.textFieldColor = UIColor.clear
-        dateTextField.borderColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
+        dateTextField.borderColor = defaultRedColor
         dateTextField.borderWidth = 2.0
         dateTextField.cornerRadius = 3.0
         dateTextField.layer.borderColor = UIColor.gray.cgColor
         dateTextField.layer.borderWidth = 1.0
         dateTextField.layer.cornerRadius = 3.0
+        
         self.view.addSubview(dateTextField)
         
         let myDatePicker = UIDatePicker()
@@ -69,6 +72,19 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
         myDatePicker.datePickerMode = UIDatePickerMode.date
         dateTextField.inputView = myDatePicker
 
+        toolBar.frame = CGRectMake(0, self.view.frame.size.height/6, self.view.frame.size.width, 40.0)
+        toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
+        toolBar.barStyle = .blackTranslucent
+        toolBar.tintColor = UIColor.white
+        toolBar.backgroundColor = UIColor.black
+        
+        dateTextField.inputAccessoryView = self.toolBar
+        
+        let toolBarBtn = UIBarButtonItem(title: "完了", style: .bordered, target: self, action: #selector(didTapKanryoButton))//need to implement kanryo
+        
+        toolBarBtn.tag = 1
+        toolBar.items = [toolBarBtn]
+        
         let trybutton = FUIButton()
         trybutton.frame = CGRectMake(30, dateTextField.frame.maxY + 30, self.view.bounds.size.width - 60, 50)
         trybutton.buttonColor =  UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
@@ -90,20 +106,21 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
         self.dateTextField.text = self.stringFromDate(date: dateSelecter.date as NSDate, format: "yyyy年MM月dd日")
     }
 
-    
+    //add food to local date && dismiss screen
     func didTapAddButton(sender: UIButton){
         let realm = try! Realm()
         let realmFood = RealmFood()
         realmFood.name = foodTextField.text!
-        realmFood.date = NSDate()
+        realmFood.date = dateFromString(string: self.dateTextField.text!, format:"yyyy年MM月dd日")
         realmFood.price = 100
         
         try! realm.write{
             realm.add(realmFood)
         }
-        
+        let selectedTextField = self.findFirstResponder()
+        selectedTextField?.resignFirstResponder()
+        self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
-		
 		// TODO: サーバのデータを追加する
     }
     
@@ -126,5 +143,20 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
         return false
+    }
+    
+    func didTapKanryoButton(sender: UIBarButtonItem) {
+        let selectedDateTextField = self.findFirstResponder()
+        selectedDateTextField?.resignFirstResponder()
+    }
+    
+    func findFirstResponder() -> UITextField?
+    {
+        for view in self.view.subviews{
+            if view is UITextField && view.isFirstResponder == true {
+                return view as? UITextField
+            }
+        }
+        return nil
     }
 }

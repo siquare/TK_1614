@@ -5,7 +5,6 @@ class FTHConfrimationTableCell: UITableViewCell {
     var nameTextField:UITextField?
     var dateTextField:UITextField?
     var priceTextField: UITextField?
-    
     let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
     
     override init(style:UITableViewCellStyle, reuseIdentifier reusedIdentifier:String!){

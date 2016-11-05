@@ -148,6 +148,8 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
             records[(cell.nameTextField?.text!)!] = (dateFromString(string:(cell.dateTextField?.text)!, format: "yyyy-MM-dd"),0,0)
         }
         updateRemoteDatabase(records)
+        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func changedDateEvent(sender:AnyObject?, textField:UITextField){
@@ -225,7 +227,7 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
     func didTapKanryoButton(sender: UIBarButtonItem) {
         let selectedDateTextField = self.findFirstResponder()
         selectedDateTextField?.resignFirstResponder()
-        selectedDateTextField?.text = self.stringFromDate(date: self.myDatePicker.date as NSDate, format: "yyyy-MM-dd")
+        selectedDateTextField?.text = self.stringFromDate(date: self.myDatePicker.date as NSDate, format: "yyyy年MM月dd日")
     }
 
     func findFirstResponder() -> UITextField?

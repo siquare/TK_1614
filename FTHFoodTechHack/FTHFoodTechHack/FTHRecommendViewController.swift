@@ -14,32 +14,34 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "おすすめレシピを見る"
+        self.title = "おすすめレシピ"
+        
         self.view.backgroundColor = UIColor.white
+        
+        //賞味期限近い食品の取得
         self.realm = try! Realm()
         bestBeforeFood = (self.realm?.objects(RealmFood.self).sorted(byProperty:"date").first)!
         
         let bestBeforeDateLabel = UILabel(frame: CGRect(x: 30, y: 80, width: self.view.bounds.size.width, height: 50))
         bestBeforeDateLabel.textAlignment = NSTextAlignment.left
-        let labeltext: [String] = ["賞味期限間近の食品：", (bestBeforeFood?.name)!]
-        bestBeforeDateLabel.text = labeltext.joined(separator: " ")
+        bestBeforeDateLabel.text = "賞味期限間近の食品 " + (bestBeforeFood?.name)!
         self.view.addSubview(bestBeforeDateLabel)
         
-        
+        //他の食品も朝せて検索するとき
         let otherFoodLabel = UILabel(frame: CGRect(x: 30, y: 130, width: 150, height: 50))
         otherFoodLabel.textAlignment = NSTextAlignment.left
-        otherFoodLabel.text = "食品を追加する: "
+        otherFoodLabel.text = "食品を追加する"
         self.view.addSubview(otherFoodLabel)
         
-        self.additionalFoodtextField = FUITextField(frame: CGRect(x: otherFoodLabel.frame.maxX, y: otherFoodLabel.frame.minY, width: self.view.bounds.size.width - otherFoodLabel.frame.maxX - 10, height: 50))
+        self.additionalFoodtextField = FUITextField(frame: CGRect(x: otherFoodLabel.frame.maxX, y: otherFoodLabel.frame.minY, width: self.view.bounds.size.width - otherFoodLabel.frame.maxX - 30, height: 40))
         additionalFoodtextField.delegate = self
         self.additionalFoodtextField.textFieldColor = UIColor.clear
         self.additionalFoodtextField.layer.borderColor = UIColor.gray.cgColor
         self.additionalFoodtextField.layer.borderWidth = 1.0
+        self.additionalFoodtextField.layer.cornerRadius = 3.0
         self.view.addSubview(additionalFoodtextField)
         
-        let trybutton = FUIButton()
-        trybutton.frame = CGRectMake(30, otherFoodLabel.frame.maxY + 30, self.view.frame.size.width - 60, 50)
+        let trybutton = FUIButton(frame : CGRect(x:30, y:otherFoodLabel.frame.maxY + 30, width:self.view.frame.size.width - 60, height:50))
         trybutton.buttonColor = defaultRedColor
         trybutton.shadowColor = UIColor.red
         trybutton.shadowHeight = 3.0
@@ -54,8 +56,8 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         //using WKWebview to show the recomendation recipies though Rakuten recipi.
         _webkitview?.navigationDelegate = self
         
-        self._webkitview = WKWebView(frame:CGRectMake(10, trybutton.frame.maxY + 30, self.view.bounds.size.width - 10, self.view.bounds.size.height))
-        
+        self._webkitview = WKWebView(frame:CGRect(x:10, y:trybutton.frame.maxY + 30, width:self.view.bounds.size.width - 10, height:self.view.bounds.size.height))
+        //食品の配列を受け取ってqueryを作成、webView表示
         self.showWebViewWithKeyWords(keywords: [(self.bestBeforeFood?.name)!])
     }
     
@@ -66,7 +68,7 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         }
         self.showWebViewWithKeyWords(keywords: keywords as! [String])
     }
-    
+    //build search query
     func showWebViewWithKeyWords(keywords:[String]){
         var urlstring = "http://recipe.rakuten.co.jp/search/"
         for keyword in keywords{
@@ -83,17 +85,8 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func didTapBackButton(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
         return false
     }
-    
-    func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {
-        return CGRect(x: x, y: y, width: width, height: height)
-    }
-    
 }

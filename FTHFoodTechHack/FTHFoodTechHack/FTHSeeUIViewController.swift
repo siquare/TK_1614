@@ -38,8 +38,8 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.view.addSubview(myTableView)
         
-        //in-app notification
-        let banner = Banner(title: tableViewData[0].name + "がもうすぐ賞味期限切れです！", subtitle:String(-1 * tableViewData[0].price) + "円", image: UIImage(named: "Icon"), backgroundColor: UIColor(red:48.00/255.0, green:174.0/255.0, blue:51.5/255.0, alpha:1.000))
+        //アプリ内通知
+        let banner = Banner(title: tableViewData[0].name + "がもうすぐ賞味期限切れです！", subtitle:String(-1 * tableViewData[0].price) + "円", image: UIImage(named: "Icon"), backgroundColor: UIColor.red)
         banner.dismissesOnTap = true
         banner.show(duration: 3.0)
     }
@@ -61,10 +61,26 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         let cell =  MGSwipeTableCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "FoodCell")
         cell.contentView.layer.borderColor = defaultRedColor.cgColor
         cell.contentView.layer.borderWidth = 2.0
-        cell.contentView.layer.cornerRadius = 10.0
-
-        cell.textLabel?.text = self.createCellTitle(foodModel: self.tableViewData[indexPath.row]) 
-        cell.backgroundColor = UIColor.white
+        cell.contentView.layer.cornerRadius = 5.0
+        
+        //賞味期限近かったら色を変える
+        if self.isGettingBad(date: self.tableViewData[indexPath.row].date){
+            cell.contentView.layer.backgroundColor = UIColor.yellow.cgColor
+        } else {
+            cell.contentView.layer.backgroundColor = UIColor.clear.cgColor
+        }
+        
+        //initialize cell's textLabel.それぞれの項目alignmentさせるためにtextLabel使っています
+        let foodModel = self.tableViewData[indexPath.row]
+        let nameLabel = UILabel(frame: CGRect(x: 10, y: 0, width: 150, height:40))
+        nameLabel.text = foodModel.name
+        cell.addSubview(nameLabel)
+        let dateLabel = UILabel(frame: CGRect(x: self.myTableView.center.x - 30, y: 0, width: 150, height:40))
+        dateLabel.text = "あと" + String(self.calculateBestBeforeDate(date: foodModel.date)) + "日"
+        cell.addSubview(dateLabel)
+        let priceLabel = UILabel(frame: CGRect(x: self.myTableView.frame.maxX - 100, y: 0, width: 150, height:40))
+        priceLabel.text = String(foodModel.price) + "円"
+        cell.addSubview(priceLabel)
          
         //implemented left and right buttons to enable users to remove/send line to fams.
         cell.rightButtons = [MGSwipeButton(title: "削除する", icon: UIImage(named:"check.png"), backgroundColor: UIColor.red, callback: {
@@ -87,18 +103,22 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
 			print("Status Code: \(response.result.isSuccess)")
 		}
 	}
-	
-    func createCellTitle (foodModel: FTHFoodModel) -> String{
-        let cellTextString = foodModel.name + "              あと" + String(self.calculateBestBeforeDate(date: foodModel.date)) + "日             " + String(foodModel.price) + "円"
-        return cellTextString
-    }
     
+    //あと何日もつか計算
     func calculateBestBeforeDate (date:NSDate) -> Int {
         let now = NSDate()
         let span = date.timeIntervalSince(now as Date)
         return Int(span)/60/60/24
-        
     }
+    
+    //3にち以内に賞味期限切れるならtrue返す。せるの背景色捜査のため
+    func isGettingBad(date:NSDate) -> Bool {
+        if (self.calculateBestBeforeDate(date: date) < 3){
+            return true
+        }
+        return false
+    }
+
 	func getAccessToken() -> String {
 		let ud = UserDefaults.standard
 		return ud.object(forKey: "x-access-token") as! String

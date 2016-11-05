@@ -15,8 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             if (oldSchemaVersion < 2) {
                 // minimally this can be empty
-            }
-            print("Realm migration did run")  // Log to know migration was executed
+            } // Log to know migration was executed
     })
 
     
