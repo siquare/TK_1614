@@ -66,9 +66,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 	
-	func createUserAccountIfNeeded() {
-		return // user/addが機能してないので
-		
+	func createUserAccountIfNeeded() {		
 		let ud = UserDefaults.standard
 
 		if (ud.object(forKey: "x-access-token") != nil) { return }
