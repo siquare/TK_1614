@@ -40,7 +40,7 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         self.view.addSubview(myTableView)
         
         //in-app notification
-        let banner = Banner(title: "賞味期限切れ間近の食品があります", subtitle:tableViewData[0].name, image: UIImage(named: "Icon"), backgroundColor: UIColor(red:48.00/255.0, green:174.0/255.0, blue:51.5/255.0, alpha:1.000))
+        let banner = Banner(title: tableViewData[0].name + "がもうすぐ賞味期限切れです！", subtitle:String(-1 * tableViewData[0].price) + "円", image: UIImage(named: "Icon"), backgroundColor: UIColor(red:48.00/255.0, green:174.0/255.0, blue:51.5/255.0, alpha:1.000))
         banner.dismissesOnTap = true
         banner.show(duration: 3.0)
     }
@@ -64,7 +64,7 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.contentView.layer.borderWidth = 2.0
         cell.contentView.layer.cornerRadius = 10.0
 
-        cell.textLabel?.text = self.tableViewData[indexPath.row].name + "賞味期限切れ"
+        cell.textLabel?.text = self.createCellTitle(foodModel: self.tableViewData[indexPath.row]) 
         cell.backgroundColor = UIColor.white
          
         //implemented left and right buttons to enable users to remove/send line to fams.
@@ -94,6 +94,17 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
 		}
 	}
 	
+    func createCellTitle (foodModel: FTHFoodModel) -> String{
+        let cellTextString = foodModel.name + "              あと" + String(self.calculateBestBeforeDate(date: foodModel.date)) + "日             " + String(foodModel.price) + "円"
+        return cellTextString
+    }
+    
+    func calculateBestBeforeDate (date:NSDate) -> Int {
+        let now = NSDate()
+        let span = date.timeIntervalSince(now as Date)
+        return Int(span)/60/60/24
+        
+    }
 	func getAccessToken() -> String {
 		let ud = UserDefaults.standard
 		return ud.object(forKey: "x-access-token") as! String
