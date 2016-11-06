@@ -38,7 +38,7 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.view.addSubview(myTableView)
         
-        //アプリ内通知
+        //アプリ内通知, BRYXBannerライブラリ使用
         let banner = Banner(title: tableViewData[0].name + "がもうすぐ賞味期限切れです！", subtitle:String(-1 * tableViewData[0].price) + "円", image: UIImage(named: "Icon"), backgroundColor: UIColor.red)
         banner.dismissesOnTap = true
         banner.show(duration: 3.0)
@@ -94,6 +94,7 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         return cell
     }
 
+    //delete from remote datebase
 	func deleteRemoteData(_ item : FTHFoodModel) {
 		let accessToken = self.getAccessToken()
 		
@@ -111,7 +112,7 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         return Int(span)/60/60/24
     }
     
-    //3にち以内に賞味期限切れるならtrue返す。せるの背景色捜査のため
+    //3日以内に賞味期限切れるならtrue返す。せるの背景色捜査のため
     func isGettingBad(date:NSDate) -> Bool {
         if (self.calculateBestBeforeDate(date: date) < 3){
             return true

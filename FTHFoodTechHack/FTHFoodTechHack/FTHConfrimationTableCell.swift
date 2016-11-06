@@ -11,6 +11,8 @@ class FTHConfrimationTableCell: UITableViewCell {
         let reuseIdentifier = reusedIdentifier
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        
+        //TODO(AkariAsai):CustomizedTextFieldクラスに置き換え
         self.layer.backgroundColor = defaultRedColor.cgColor
         nameTextField = UITextField()
         dateTextField = UITextField()

@@ -5,7 +5,7 @@ import Alamofire
 import RealmSwift
 
 class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
-    
+    let defaultRedColor =  UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
     var realm: Realm?
     var tableView : UITableView = UITableView()
     var tableViewData : [(name:String, date:NSDate, price:Int)]
@@ -58,7 +58,7 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
         self.myDatePicker.addTarget(self, action: #selector(changedDateEvent), for: UIControlEvents.valueChanged)
         self.myDatePicker.datePickerMode = UIDatePickerMode.date
         
-        toolBar.frame = CGRectMake(0, self.view.frame.size.height/6, self.view.frame.size.width, 40.0)
+        toolBar.frame = CGRect(x:0, y:self.view.frame.size.height/6, width:self.view.frame.size.width, height:40.0)
         toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
         toolBar.barStyle = .blackTranslucent
         toolBar.tintColor = UIColor.white
@@ -127,8 +127,8 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
         }
         
         let trybutton = FUIButton()
-        trybutton.frame = CGRectMake(self.view.bounds.size.width/2 - 50, self.view.bounds.maxY - 100, 100, 50)
-        trybutton.buttonColor =  UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
+        trybutton.frame = CGRect(x:self.view.bounds.size.width/2 - 50, y:self.view.bounds.maxY - 100, width:100, height:50)
+        trybutton.buttonColor =  defaultRedColor
         trybutton.shadowColor = UIColor.red
         trybutton.shadowHeight = 3.0
         trybutton.cornerRadius = 6.0
@@ -152,6 +152,7 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
         self.dismiss(animated: true, completion: nil)
     }
     
+    //TODO(AkariAsai):cell上でのCustomizedTextFieldへの置き換えが終わったら削除
     func changedDateEvent(sender:AnyObject?, textField:UITextField){
         let dateSelecter: UIDatePicker = sender as! UIDatePicker
         textField.text = self.stringFromDate(date: dateSelecter.date as NSDate, format: "yyyy-MM-dd")
@@ -198,6 +199,7 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
         }
     }
     
+     //TODO(AkariAsai):cell上でのCustomizedTextFieldへの置き換えが終わったら削除
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
         return false
@@ -208,6 +210,7 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
         return ud.object(forKey: "x-access-token") as! String
     }
     
+     //TODO(AkariAsai):cell上でのCustomizedTextFieldへの置き換えが終わったら削除
     func stringFromDate(date: NSDate, format: String) -> String {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = format
@@ -218,10 +221,6 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = format
         return formatter.date(from: string)! as NSDate
-    }
-    
-    func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {
-        return CGRect(x: x, y: y, width: width, height: height)
     }
     
     func didTapKanryoButton(sender: UIBarButtonItem) {

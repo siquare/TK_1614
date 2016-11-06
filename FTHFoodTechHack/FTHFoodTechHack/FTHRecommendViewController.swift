@@ -4,11 +4,11 @@ import WebKit
 import FlatUIKit
 
 class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UITextFieldDelegate {
+    let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
     var _webkitview:WKWebView?
     var realm: Realm?
-    let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
-    var fthRefrigeratorModel = FTHRefrigeratorModel()
     var additionalFoodtextField = FTHCustoizedTextField(frame:CGRect.zero, isDate:false)
+    //一番正味消え限が近い食品がbestBeforeFoodとして選択される
     var bestBeforeFood : RealmFood?
     
     override func viewDidLoad() {
@@ -54,6 +54,7 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         self.showWebViewWithKeyWords(keywords: [(self.bestBeforeFood?.name)!])
     }
     
+    //This method will be callsed when users type additional food which will be searched with bestBefore food, builds new search query using two keywords.
     func didTapAddSearchButton(sender: UIButton){
         var keywords = [self.bestBeforeFood?.name]
         if (self.additionalFoodtextField.text != nil){
