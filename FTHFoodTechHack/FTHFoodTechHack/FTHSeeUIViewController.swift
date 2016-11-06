@@ -96,12 +96,7 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
 			print("Status Code: \(response.result.isSuccess)")
 		}
 	}
-	
-	func getAccessToken() -> String {
-		let ud = UserDefaults.standard
-		return ud.object(forKey: "x-access-token") as! String
-	}
-    
+	    
     @IBAction func didTapBackButton(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }

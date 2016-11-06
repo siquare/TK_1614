@@ -81,26 +81,28 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
     }
 
     override func didReceiveMemoryWarning() {}
-    
-    
+	
     func changedDateEvent(sender:AnyObject?){
         let dateSelecter: UIDatePicker = sender as! UIDatePicker
         self.dateTextField.text = self.stringFromDate(date: dateSelecter.date as NSDate, format: "yyyy年MM月dd日")
     }
 
-    
     func didTapAddButton(sender: UIButton){
         let realm = try! Realm()
-        let realmFood = RealmFood()
-        realmFood.name = foodTextField.text!
-        realmFood.date = NSDate()
-        realmFood.price = 100
-        
-        try! realm.write{
-            realm.add(realmFood)
-        }
 		
-		// TODO: サーバのデータを追加する
+		let name = foodTextField.text!
+		let date = NSDate()
+		let price = 100
+		
+		ServerSideDBWrapper.addItems([
+			"user_item": [ [ "item_id": NSNull(), "item_name": name, "expire_date": stringFromDate(date: date, format: "yyyy-MM-dd"), "price": price ] ]
+		], callback: { items in
+			try! realm.write {
+				items.forEach {
+					realm.add($0.toRealmFood())
+				}
+			}
+		})
     }
     
     func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {

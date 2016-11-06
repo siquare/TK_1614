@@ -22,4 +22,15 @@ open class FTHFoodModel {
         self.price = object.price
         self.id = object.id.value
     }
+	
+	func toRealmFood() -> RealmFood {
+		var realmFood = RealmFood()
+		
+		realmFood.id = self.id
+		realmFood.name = self.name
+		realmFood.date = self.date
+		realmFood.price = self.price
+		
+		return realmFood
+	}
 }

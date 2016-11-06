@@ -30,6 +30,7 @@
 		45FC27481DBCC54600E4C333 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 45FC27401DBCC0D100E4C333 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		462D043E1DC52BBE00BDE62B /* FTHRegisterDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462D043D1DC52BBE00BDE62B /* FTHRegisterDeviceViewController.swift */; };
 		462D04401DC530E600BDE62B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 462D043F1DC530E600BDE62B /* AVFoundation.framework */; };
+		4636D86D1DCDC87800350FD5 /* ServerSideDBWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4636D86C1DCDC87800350FD5 /* ServerSideDBWrapper.swift */; };
 		46DC79431DC4FA45003D0CDD /* BestBeforeDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D01AB21DC1D45F00775C94 /* BestBeforeDate.swift */; };
 		81D4F7FBF36B0E8D66C7A5A4 /* Pods_FTHFoodTechHackUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62BE4E7094A7502C21BA07B /* Pods_FTHFoodTechHackUITests.framework */; };
 		868FB2989522C9E01BF309F9 /* Pods_FTHFoodTechHackTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC3303515FD8507C746B47E8 /* Pods_FTHFoodTechHackTests.framework */; };
@@ -98,6 +99,7 @@
 		45FC27421DBCC11E00E4C333 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		462D043D1DC52BBE00BDE62B /* FTHRegisterDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTHRegisterDeviceViewController.swift; sourceTree = "<group>"; };
 		462D043F1DC530E600BDE62B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4636D86C1DCDC87800350FD5 /* ServerSideDBWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerSideDBWrapper.swift; sourceTree = "<group>"; };
 		4684D13C1DC47E2B00684668 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		46D01AB21DC1D45F00775C94 /* BestBeforeDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BestBeforeDate.swift; sourceTree = "<group>"; };
 		97A4A03148608FDBECEB2BFA /* Pods-FTHFoodTechHackUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FTHFoodTechHackUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FTHFoodTechHackUITests/Pods-FTHFoodTechHackUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				45FC27081DBB569500E4C333 /* FTHFoodTechHack.xcdatamodeld */,
 				46D01AB21DC1D45F00775C94 /* BestBeforeDate.swift */,
 				4684D13C1DC47E2B00684668 /* MyPlayground.playground */,
+				4636D86C1DCDC87800350FD5 /* ServerSideDBWrapper.swift */,
 			);
 			path = FTHFoodTechHack;
 			sourceTree = "<group>";
@@ -520,6 +523,7 @@
 				45FC273F1DBC52D600E4C333 /* FTHFoodModel.swift in Sources */,
 				45FC270A1DBB569500E4C333 /* FTHFoodTechHack.xcdatamodeld in Sources */,
 				45366A031DBEEFFA00E1974B /* FTHAddChildViewController.swift in Sources */,
+				4636D86D1DCDC87800350FD5 /* ServerSideDBWrapper.swift in Sources */,
 				45FC27041DBB569500E4C333 /* ViewController.swift in Sources */,
 				45FC27391DBC472600E4C333 /* FTHRefrigeratorModel.swift in Sources */,
 				45FC27021DBB569500E4C333 /* AppDelegate.swift in Sources */,
