@@ -9,25 +9,26 @@ class FTHAddViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
+        self.title = "食品を追加する"
         self.view.backgroundColor = UIColor.white
-        let addLabel = UILabel(frame: CGRect(x: 10, y: 100, width: self.view.bounds.size.width , height: 50))
+        let addLabel = UILabel(frame: CGRect(x: 10, y: 80, width: self.view.bounds.size.width , height: 50))
         addLabel.textAlignment = NSTextAlignment.center
         addLabel.text = "食材を追加する方法を選んでください。"
         self.view.addSubview(addLabel)
         
-        //init a button for taing pics
+        //init a button for taking pics
         let takePicButton =  UIButton(frame: CGRect(x: 50, y: 200, width: self.view.bounds.size.width / 3, height: self.view.bounds.size.width / 3))
         takePicButton.backgroundColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
         takePicButton.setTitle("写真を撮る", for: UIControlState())
         takePicButton.addTarget(self, action: #selector(pickImageFromCamera), for:.touchUpInside)
+        takePicButton.layer.cornerRadius = 10.0
         self.view.addSubview(takePicButton)
         
         //init a button for adding food by directly typing
         let typingButton =  UIButton(frame: CGRect(x: 30 + takePicButton.frame.maxX, y: 200, width: self.view.bounds.size.width / 3, height: self.view.bounds.size.width / 3))
         typingButton.backgroundColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
         typingButton.setTitle("入力する", for: UIControlState())
+        typingButton.layer.cornerRadius = 10.0
         typingButton.addTarget(self, action: #selector(didTapAddbyTypingButton), for:.touchUpInside)
         self.view.addSubview(typingButton)
         
@@ -57,7 +58,8 @@ class FTHAddViewController: UIViewController, UIImagePickerControllerDelegate, U
     func pickImageFromCamera() {
         let myPickerController = UIImagePickerController()
         myPickerController.delegate = self;
-        myPickerController.sourceType = UIImagePickerControllerSourceType.camera
+        //TODO(AkariAsai):修正されたらdatesourceをカメラに直す。
+        myPickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
         
         self.present(myPickerController, animated: true, completion: nil)
     }
@@ -79,7 +81,6 @@ class FTHAddViewController: UIViewController, UIImagePickerControllerDelegate, U
             self.navigationController?.pushViewController(confirmationViewController, animated: true)
         })
         bestBeforeDate.fetch(myImageView.image!)
-        //TODO(hkarasawa):これが確認viewです。
     }
     
     func didTapAddbyTypingButton(_ sender: UIButton){

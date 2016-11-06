@@ -1,10 +1,23 @@
 import UIKit
 import CoreData
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var navigationController: UINavigationController?
+    
+    let config = Realm.Configuration(
+        schemaVersion: 2,  // Must be greater than previous version
+        migrationBlock: { migration, oldSchemaVersion in
+            if (oldSchemaVersion < 1) {
+                // minimally this can be empty
+            }
+            if (oldSchemaVersion < 2) {
+                // minimally this can be empty
+            } // Log to know migration was executed
+    })
+
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -15,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
         
         navigationController?.navigationBar.barTintColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
+        navigationController?.navigationBar.tintColor = UIColor.white
+        
         
         return true
     }

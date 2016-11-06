@@ -62,6 +62,16 @@ class ServerSideDBWrapper {
 		}
 	}
 	
+	static func deleteItems(_ items : [ FTHFoodModel ]) {
+		let accessToken = self.getAccessToken()
+		
+		Alamofire.request("https://app.uthackers-app.tk/item/delete", method: .post, parameters: [
+			"user_item_id": items.map { $0.id }
+			], encoding: JSONEncoding.default, headers: [ "x-access-token" : accessToken ]).responseJSON { response in
+				print("Status Code: \(response.result.isSuccess)")
+		}
+	}
+	
 	static func getAccessToken() -> String {
 		let ud = UserDefaults.standard
 		return ud.object(forKey: "x-access-token") as! String
