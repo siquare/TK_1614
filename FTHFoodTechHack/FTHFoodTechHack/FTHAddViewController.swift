@@ -59,7 +59,7 @@ class FTHAddViewController: UIViewController, UIImagePickerControllerDelegate, U
         let myPickerController = UIImagePickerController()
         myPickerController.delegate = self;
         //TODO(AkariAsai):修正されたらdatesourceをカメラに直す。
-        myPickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        myPickerController.sourceType = UIImagePickerControllerSourceType.camera
         
         self.present(myPickerController, animated: true, completion: nil)
     }

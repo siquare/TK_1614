@@ -22,7 +22,7 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         
         let bestBeforeDateLabel = UILabel(frame: CGRect(x: 30, y: 80, width: self.view.bounds.size.width, height: 50))
         bestBeforeDateLabel.textAlignment = NSTextAlignment.left
-        bestBeforeDateLabel.text = "賞味期限間近の食品 " + (bestBeforeFood?.name)!
+        bestBeforeDateLabel.text = "賞味期限間近の食品 " + bestBeforeFood?.name
         self.view.addSubview(bestBeforeDateLabel)
         
         //他の食品も朝せて検索するとき
@@ -51,16 +51,16 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         
         self._webkitview = WKWebView(frame:CGRect(x:10, y:trybutton.frame.maxY + 30, width:self.view.bounds.size.width - 10, height:self.view.bounds.size.height))
         //食品の配列を受け取ってqueryを作成、webView表示
-        self.showWebViewWithKeyWords(keywords: [(self.bestBeforeFood?.name)!])
+        self.showWebViewWithKeyWords(keywords: [(bestBeforeFood?.name)!])
     }
     
     //This method will be callsed when users type additional food which will be searched with bestBefore food, builds new search query using two keywords.
     func didTapAddSearchButton(sender: UIButton){
-        var keywords = [self.bestBeforeFood?.name]
+        var keywords = [bestBeforeFood?.name]
         if (self.additionalFoodtextField.text != nil){
-            keywords.append(self.additionalFoodtextField.text)
+            keywords.append(self.additionalFoodtextField.text!)
         }
-        self.showWebViewWithKeyWords(keywords: keywords as! [String])
+        self.showWebViewWithKeyWords(keywords: keywords as! [String] )
     }
     //build search query
     func showWebViewWithKeyWords(keywords:[String]){

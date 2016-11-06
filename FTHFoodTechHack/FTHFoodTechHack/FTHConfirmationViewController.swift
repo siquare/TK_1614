@@ -20,19 +20,19 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "concell", for: indexPath as IndexPath) as! FTHConfrimationTableCell
         //set cell's delegate
-        cell.nameTextField?.delegate = self
-        cell.priceTextField?.delegate = self
-        cell.dateTextField?.delegate = self
+        cell.nameTextField.delegate = self
+        cell.priceTextField.delegate = self
+        cell.dateTextField.delegate = self
         
         //add datepicker and accessoryView
-        cell.dateTextField?.inputAccessoryView = self.toolBar
-        cell.dateTextField?.inputView = self.myDatePicker
+        cell.dateTextField.inputAccessoryView = self.toolBar
+        cell.dateTextField.inputView = self.myDatePicker
         
         //set initial value
         let dataSource = self.tableViewData[indexPath.row]
-        cell.nameTextField?.text = dataSource.name
-        cell.dateTextField?.text =  self.stringFromDate(date: dataSource.date as NSDate, format: "yyyy-MM-dd")
-        cell.priceTextField?.text = String(dataSource.price)
+        cell.nameTextField.text = dataSource.name
+        cell.dateTextField.text =  self.stringFromDate(date: dataSource.date as NSDate, format: "yyyy年MM月dd日")
+        cell.priceTextField.text = String(dataSource.price)
         
         return cell
     }
@@ -94,38 +94,6 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
         for (key, val) in self.table {
             self.tableViewData.append((name: key, date: val.1, price: val.2))
         }
-        
-        func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-            return 1
-        }
-        
-        func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return self.table.count
-        }
-        
-        func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "concell", for: indexPath as IndexPath) as! FTHConfrimationTableCell
-            //set cell's delegate
-            cell.nameTextField?.delegate = self
-            cell.priceTextField?.delegate = self
-            cell.dateTextField?.delegate = self
-            
-            //add datepicker and accessoryView
-            cell.dateTextField?.inputAccessoryView = self.toolBar
-            cell.dateTextField?.inputView = self.myDatePicker
-            
-            //set initial value 
-            let dataSource = self.tableViewData[indexPath.row]
-            cell.nameTextField?.text = dataSource.name
-            cell.dateTextField?.text =  self.stringFromDate(date: dataSource.date as NSDate, format: "yyyy-MM-dd")
-            cell.priceTextField?.text = String(dataSource.price)
-            
-            return cell
-        }
-        
-        func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        }
-        
         let trybutton = FUIButton()
         trybutton.frame = CGRect(x:self.view.bounds.size.width/2 - 50, y:self.view.bounds.maxY - 100, width:100, height:50)
         trybutton.buttonColor =  defaultRedColor
@@ -138,16 +106,28 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
         trybutton.setTitle("認証する", for: UIControlState())
         trybutton.addTarget(self, action: #selector(didTapConButton), for:.touchUpInside)
         self.view.addSubview(trybutton)
+        
     }
+    
+        private func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+            return 1
+        }
+        
+        private func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return self.table.count
+        }
+        
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        }
     
     func didTapConButton (_ sender: UIButton){
         var records : [  String : (NSDate, Int) ] = [:]
         let cells = self.tableView.visibleCells as! Array<FTHConfrimationTableCell>
         
         for cell in cells {
-			let name = cell.nameTextField!.text!
-			let date = dateFromString(string: cell.dateTextField!.text!, format: "yyyy-MM-dd")
-			let price = Int(cell.priceTextField!.text!)!
+			let name = cell.nameTextField.text!
+			let date = dateFromString(string: cell.dateTextField.text!, format:"yyyy年MM月dd日")
+			let price = Int(cell.priceTextField.text!)!
 			
             records[name] = (date, price)
         }
@@ -161,13 +141,13 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
     //TODO(AkariAsai):cell上でのCustomizedTextFieldへの置き換えが終わったら削除
     func changedDateEvent(sender:AnyObject?, textField:UITextField){
         let dateSelecter: UIDatePicker = sender as! UIDatePicker
-        textField.text = self.stringFromDate(date: dateSelecter.date as NSDate, format: "yyyy-MM-dd")
+        textField.text = self.stringFromDate(date: dateSelecter.date as NSDate, format: "yyyy年MM月dd日")
     }
 	
 	// name : (expire_date, price)
     func updateDatabase(_ records : [ String : (NSDate, Int) ]) {
         let user_items = records.map { key, val in
-			[ "item_id" : NSNull(), "item_name" : key, "expire_date" : stringFromDate(date: val.0, format: "yyyy-MM-dd"), "price": val.1 ]
+			[ "item_id" : NSNull(), "item_name" : key, "expire_date" : stringFromDate(date: val.0, format: "yyyy年MM月dd日"), "price": val.1 ]
         }
 		
 		ServerSideDBWrapper.addItems([ "user_item": user_items ], callback: { items in
@@ -212,7 +192,7 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
     {
         let cells = self.tableView.visibleCells as! Array<FTHConfrimationTableCell>
         for cell in cells {
-            if cell.dateTextField?.isFirstResponder == true {
+            if cell.dateTextField.isFirstResponder == true {
                 return cell.dateTextField
             }
         }

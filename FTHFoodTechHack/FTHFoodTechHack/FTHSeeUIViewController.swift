@@ -22,7 +22,9 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         self.realm = try! Realm()
         for realmFood in (self.realm?.objects(RealmFood.self).sorted(byProperty: "date"))! {
             let food = FTHFoodModel(object: realmFood)
+            if (realmFood.name.characters.count > 0){
             self.tableViewData.append(food)
+            }
         }
         
         self.view.backgroundColor = UIColor.white

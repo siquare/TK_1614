@@ -8,14 +8,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigationController: UINavigationController?
     
     let config = Realm.Configuration(
-        schemaVersion: 2,  // Must be greater than previous version
+        schemaVersion: 1,  // Must be greater than previous version
         migrationBlock: { migration, oldSchemaVersion in
             if (oldSchemaVersion < 1) {
                 // minimally this can be empty
             }
-            if (oldSchemaVersion < 2) {
-                // minimally this can be empty
-            } // Log to know migration was executed
     })
 
     

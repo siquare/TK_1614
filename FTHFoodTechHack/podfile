@@ -6,6 +6,7 @@ target 'FTHFoodTechHack' do
 	use_frameworks!
 	pod 'FlatUIKit'
 	pod 'BRYXBanner'
+	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git'
 	pod 'MGSwipeTableCell'
 	pod 'SSBouncyButton', '~> 1.0'
 	pod 'Realm', :git => 'https://github.com/realm/realm-cocoa.git', :submodules => true
