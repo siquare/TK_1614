@@ -34,8 +34,8 @@
 
 ### 活用した外部技術
 
-* Rakuten MA(形態素解析)<https://github.com/rakuten-nlp/rakutenma/blob/master/README-ja.md>
-* Google Could Vision API(画像解析)<https://cloud.google.com/vision/>
+* [Rakuten MA (形態素解析)](https://github.com/rakuten-nlp/rakutenma/blob/master/README-ja.md)
+* [Google Could Vision API (画像解析)](https://cloud.google.com/vision/)
 
 #### API・データ
 
