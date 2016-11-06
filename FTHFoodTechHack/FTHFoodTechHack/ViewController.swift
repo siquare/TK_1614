@@ -9,9 +9,9 @@ class ViewController: UIViewController {
     let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
     
     override func viewDidLoad() {
-		super.viewDidLoad()
-		self.createUserAccountIfNeeded()
-		
+        super.viewDidLoad()
+        self.createUserAccountIfNeeded()
+        
         self.view.backgroundColor = UIColor.white
         self.navigationItem.hidesBackButton = true
         self.navigationItem.title = "Fresh Fridge"
@@ -67,18 +67,18 @@ class ViewController: UIViewController {
         addDeviceQRButton.addTarget(self, action: #selector(didTapQrButton), for: .touchUpInside)
         self.view.addSubview(addDeviceQRButton)
         
-
+        
         
         //let alert = UIAlertController(title: "消費期限をお知らせして欲しいグループにLINE bot(@sok3197j)を招待して、下記の文字列をコピーして投稿して下さい。", message: "familytoken:\(familyToken)", preferredStyle: .alert)
         
         let addLineButton = FUIButton(frame:CGRect(x:addDeviceQRButton.frame.maxX + 10, y:recButton.frame.maxY + 30, width: (self.view.bounds.size.width - 100)/2, height: 50))
-                addLineButton.buttonColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
+        addLineButton.buttonColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
         addLineButton.setTitle("LineBot追加", for: .normal)
         addLineButton.setTitleColor(UIColor.white, for: .normal)
         addLineButton.addTarget(self, action: #selector(didTapLineButton), for: .touchUpInside)
-                self.view.addSubview(addLineButton)
+        self.view.addSubview(addLineButton)
         
-
+        
     }
     
     func didTapSeeButton(_ sender:UIButton!){
@@ -94,7 +94,7 @@ class ViewController: UIViewController {
     func didTapQrButton(_ sender: UIButton){
         let addQRViewController = FTHRegisterDeviceViewController()
         self.navigationController?.pushViewController(addQRViewController, animated: true)
-
+        
     }
     
     func didTapLineButton(_ dsender:UIButton){
@@ -106,37 +106,37 @@ class ViewController: UIViewController {
         let recViewController = FTHRecommendViewController()
         self.navigationController?.pushViewController(recViewController, animated: true)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-	
-	func createUserAccountIfNeeded() {		
-		let ud = UserDefaults.standard
-
-		if (ud.string(forKey: "x-access-token") != nil) { return }
-	
-		Alamofire.request("https://app.uthackers-app.tk/user/add", method: .post, parameters: [:], encoding: JSONEncoding.default).responseJSON { response in
-			guard let object = response.result.value else { return }
-			let json = JSON(object)
-			
-			ud.set(json["user"]["access_token"].string!, forKey: "x-access-token")
-			ud.set(json["family"]["token"].string!, forKey: "family-token")
-		}
-	}
-	
-	func showFamilyTokenDialog() {
-		let ud = UserDefaults.standard
-		let familyToken = ud.object(forKey: "family-token") as! String
-		
-		let alert = UIAlertController(title: "消費期限をお知らせして欲しいグループにLINE bot(@sok3197j)を招待して、下記の文字列をコピーして投稿して下さい。", message: "familytoken:\(familyToken)", preferredStyle: .alert)
-		
-		alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-			self.dismiss(animated: true, completion: nil)
-		}))
-
-		self.present(alert, animated: true, completion: nil)
-	}
+    
+    func createUserAccountIfNeeded() {
+        let ud = UserDefaults.standard
+        
+        if (ud.string(forKey: "x-access-token") != nil) { return }
+        
+        Alamofire.request("https://app.uthackers-app.tk/user/add", method: .post, parameters: [:], encoding: JSONEncoding.default).responseJSON { response in
+            guard let object = response.result.value else { return }
+            let json = JSON(object)
+            
+            ud.set(json["user"]["access_token"].string!, forKey: "x-access-token")
+            ud.set(json["family"]["token"].string!, forKey: "family-token")
+        }
+    }
+    
+    func showFamilyTokenDialog() {
+        let ud = UserDefaults.standard
+        let familyToken = ud.object(forKey: "family-token") as! String
+        
+        let alert = UIAlertController(title: "消費期限をお知らせして欲しいグループにLINE bot(@sok3197j)を招待して、下記の文字列をコピーして投稿して下さい。", message: "familytoken:\(familyToken)", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
