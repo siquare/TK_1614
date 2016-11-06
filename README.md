@@ -21,7 +21,7 @@ FreshFridgeでは、こういった家庭から出る食品の廃棄を減らす
 
 ### 今後の展望
 
-* 今回はタッチディスプレイの実現と人感センサの両立のためにAndroidタブレットとRaspberry Piの二つを連携させた。これを一つの機器で実現させる。
+* 今回はタッチディスプレイの実現と人感センサの両立のためにAndroidタブレットとArduinoの二つを連携させた。これを一つの機器で実現させる。
 * (特にAndroidスマートフォン向けに) NFCタグを実装し、NFCの読み取りだけでアプリの起動、データの連携を行う。
 
 ### 注力したこと（こだわり等）
@@ -39,6 +39,7 @@ FreshFridgeでは、こういった家庭から出る食品の廃棄を減らす
 
 #### API・データ
 
+* Line Messaging API
 * Google Could Vision API
 * StillTasty  
 
@@ -52,12 +53,18 @@ FreshFridgeでは、こういった家庭から出る食品の廃棄を減らす
 * [pecl Redis](https://pecl.php.net/package/redis)
 * [pecl YAML](https://pecl.php.net/package/yaml)
 
+##### Android
+* [physicaloid](http://www.physicaloid.com/)
+* [retrofit2](https://square.github.io/retrofit/)
+* [zxing](https://github.com/zxing/zxing)
+
 #### デバイス
 
 * iPhone
 * Androidタブレット
-* RasberryPi
+* Arduino
 * 人感センサー、モーションセンサー
+* Line Beacon
 
 ### 独自技術
 #### 期間中に開発した独自機能・技術
