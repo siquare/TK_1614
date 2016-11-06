@@ -92,7 +92,7 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
         self.view.addSubview(self.tableView)
 
         for (key, val) in self.table {
-            self.tableViewData.append((name:key, date:val.1, price:val.0))
+            self.tableViewData.append((name: key, date: val.1, price: val.2))
         }
         
         func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -145,9 +145,9 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
         let cells = self.tableView.visibleCells as! Array<FTHConfrimationTableCell>
         
         for cell in cells {
-			let name = cell.nameTextField?.text!
-			let date = dateFromString(string: cell.dateTextField?.text!, format: "yyyy-MM-dd")
-			let price = cell.priceTextFiebbbbld?.text!.toInt()
+			let name = cell.nameTextField!.text!
+			let date = dateFromString(string: cell.dateTextField!.text!, format: "yyyy-MM-dd")
+			let price = Int(cell.priceTextField!.text!)!
 			
             records[name] = (date, price)
         }
@@ -167,13 +167,13 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
 	// name : (expire_date, price)
     func updateDatabase(_ records : [ String : (NSDate, Int) ]) {
         let user_items = records.map { key, val in
-			[ "item_id" : "", "item_name" : key, "expire_date" : String(describing: val.0), "price": val.1 ]
+			[ "item_id" : NSNull(), "item_name" : key, "expire_date" : stringFromDate(date: val.0, format: "yyyy-MM-dd"), "price": val.1 ]
         }
 		
 		ServerSideDBWrapper.addItems([ "user_item": user_items ], callback: { items in
-			try! realm?.write {
+			try! self.realm?.write {
 				items.forEach {
-					realm.add($0.toRealmFood())
+					self.realm?.add($0.toRealmFood())
 				}
 			}
 		})
@@ -183,11 +183,6 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
         return false
-    }
-    
-    func getAccessToken() -> String {
-        let ud = UserDefaults.standard
-        return ud.object(forKey: "x-access-token") as! String
     }
     
      //TODO(AkariAsai):cell上でのCustomizedTextFieldへの置き換えが終わったら削除

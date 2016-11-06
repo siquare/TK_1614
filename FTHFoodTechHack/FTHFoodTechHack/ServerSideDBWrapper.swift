@@ -50,7 +50,7 @@ class ServerSideDBWrapper {
 			var table : [ FTHFoodModel ] = []
 			
 			json["user_item"].arrayValue.forEach {
-				let id = Int($0["user_item_id"].string!)!
+				let id = $0["user_item_id"].intValue
 				let name = $0["item_name"].string!
 				let date = self.dateFromString(string: $0["expire_date"].string!, format: "yyyy-MM-dd")
 				let price = $0["price"].intValue

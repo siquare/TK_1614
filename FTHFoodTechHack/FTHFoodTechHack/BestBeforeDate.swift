@@ -54,11 +54,10 @@ class BestBeforeDate {
 			var table : [ String : (Int, NSDate, Int) ] = [ : ]
 			
 			json["item_master"].arrayValue.forEach {
-				let id = Int($0["user_item_id"].string!)!
+				let id = $0["item_id"].intValue
 				let name = $0["original_name"].string!
 				let date = self.calcDeadlineFromRangeString($0["default_expire_days"].intValue)
 				let price = self.extractPriceFromFullText(original_text, word: name)
-                print(price)
 				
 				table[name] = (id, date, price)
 			}
@@ -85,10 +84,16 @@ class BestBeforeDate {
 			let regex = try NSRegularExpression(pattern: pattern, options: [])
 			let results = regex.matches(in: text, options: [], range: NSMakeRange(0, text.characters.count))
 			
-			return Int((text as NSString).substring(with: results[0].range))!
+			if results.count > 0 {
+				return Int((text as NSString).substring(with: results[0].range))!
+			} else {
+				return 0
+			}
 		} catch _ as NSError {
 			return 0
         }
+		
+		return 0
 	}
 	
 	func extractHeadNumber(_ d : String) -> Int {
