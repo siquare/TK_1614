@@ -87,7 +87,7 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
 		], callback: { items in
 			try! realm.write {
 				items.forEach {
-					realm.add($0.toRealmFood())
+					realm.add($0)
 				}
 			}
 		})

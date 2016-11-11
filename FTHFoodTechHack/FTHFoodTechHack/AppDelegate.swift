@@ -7,15 +7,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var navigationController: UINavigationController?
     
-    let config = Realm.Configuration(
-        schemaVersion: 1,  // Must be greater than previous version
-        migrationBlock: { migration, oldSchemaVersion in
-            if (oldSchemaVersion < 1) {
-                // minimally this can be empty
-            }
-    })
-
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         let viewController: ViewController = ViewController()
@@ -26,11 +17,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         navigationController?.navigationBar.barTintColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
         navigationController?.navigationBar.tintColor = UIColor.white
-        
-        
+		
+		Realm.Configuration.defaultConfiguration = Realm.Configuration(
+			schemaVersion: 1,  // Must be greater than previous version
+			migrationBlock: { migration, oldSchemaVersion in
+				if (oldSchemaVersion < 1) {
+					// minimally this can be empty
+				}
+		})
+		
         return true
     }
-    
+	
     func applicationWillResignActive(_ application: UIApplication) {
     }
     

@@ -3,11 +3,12 @@ import SwiftyJSON
 import Alamofire
 import FlatUIKit
 import SCLAlertView
-
+import RealmSwift
 
 class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+				
         self.createUserAccountIfNeeded()
         
         self.view.backgroundColor = UIColor.white

@@ -147,13 +147,13 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
 	// name : (expire_date, price)
     func updateDatabase(_ records : [ String : (NSDate, Int) ]) {
         let user_items = records.map { key, val in
-			[ "item_id" : NSNull(), "item_name" : key, "expire_date" : stringFromDate(date: val.0, format: "yyyy年MM月dd日"), "price": val.1 ]
+			[ "item_id" : NSNull(), "item_name" : key, "expire_date" : stringFromDate(date: val.0, format: "yyyy-MM-dd"), "price": val.1 ]
         }
 		
 		ServerSideDBWrapper.addItems([ "user_item": user_items ], callback: { items in
 			try! self.realm?.write {
 				items.forEach {
-					self.realm?.add($0.toRealmFood())
+					self.realm?.add($0)
 				}
 			}
 		})
