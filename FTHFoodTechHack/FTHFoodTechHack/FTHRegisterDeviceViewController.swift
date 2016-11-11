@@ -7,11 +7,11 @@ import AVFoundation
 class FTHRegisterDeviceViewController : UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
     var qrImageView:UIImageView!
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupImageView()
         self.pickImageFromCamera()
-        
 	}
 	
 	func readQR(_ image : UIImage) {
@@ -36,14 +36,13 @@ class FTHRegisterDeviceViewController : UIViewController, AVCaptureMetadataOutpu
 		}
 	}
     
-    func setupImageView()
-    {
+    func setupImageView() {
         qrImageView = UIImageView()
         
-        let xPostion:CGFloat = 50
-        let yPostion:CGFloat = 200
-        let buttonWidth:CGFloat = 200
-        let buttonHeight:CGFloat = 200
+        let xPostion : CGFloat = 50
+        let yPostion : CGFloat = 200
+        let buttonWidth : CGFloat = 200
+        let buttonHeight : CGFloat = 200
         
         qrImageView.frame = CGRect(x: xPostion, y: yPostion, width: buttonWidth, height: buttonHeight)
         
@@ -57,8 +56,7 @@ class FTHRegisterDeviceViewController : UIViewController, AVCaptureMetadataOutpu
         self.present(myPickerController, animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
-    {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [ String : Any ]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             qrImageView.image = pickedImage
             qrImageView.isHidden  = true

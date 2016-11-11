@@ -5,42 +5,40 @@ import Alamofire
 import BRYXBanner
 
 class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    var fthRefrigeratorModel = FTHRefrigeratorModel()
-    var backBtn: UIBarButtonItem!
-    var realm: Realm?
-    let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
-    //let mySections: NSArray = ["賞味期限間近の食品", "冷蔵庫内の食品"]
-    var tableViewData : [FTHFoodModel] = []
-    
-    fileprivate var myTableView: UITableView!
-    
+	
+	var backBtn: UIBarButtonItem!
+	fileprivate var myTableView: UITableView!
+	
+	var realm: Realm?
+    var tableViewData : [FTHFoodModel] = []  // TODO: tableViewData.size=0のときことが全く考慮されていない
+	
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         self.realm = try! Realm()
+		
         for realmFood in (self.realm?.objects(RealmFood.self).sorted(byProperty: "date"))! {
             let food = FTHFoodModel(object: realmFood)
-            if (realmFood.name.characters.count > 0){
-            self.tableViewData.append(food)
+			
+            if (realmFood.name.characters.count > 0) {
+				self.tableViewData.append(food)
             }
         }
         
         self.view.backgroundColor = UIColor.white
-        // Do any additional setup after loading the view, typically from a nib.
         self.title = "冷蔵庫の中身を見る"
         self.navigationItem.leftBarButtonItem = backBtn
         
-        myTableView = UITableView(frame:CGRect(x:20, y: 50, width:self.view.bounds.width - 40, height:self.view.bounds.height - 100))
+        myTableView = UITableView(frame: CGRect(x:20, y: 50, width:self.view.bounds.width - 40, height:self.view.bounds.height - 100))
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "FoodCell")
         myTableView.dataSource = self
         myTableView.delegate = self
         myTableView.separatorColor = UIColor.clear
         
         self.view.addSubview(myTableView)
-        
-        //アプリ内通知, BRYXBannerライブラリ使用
+		
+		// TODO: アプリ内通知は起動時に行うべきではないか。この画面にいるということはある品が賞味期限切れであることは自明ではないか。
+        // アプリ内通知, BRYXBannerライブラリ使用
         let banner = Banner(title: tableViewData[0].name + "がもうすぐ賞味期限切れです！", subtitle:String(-1 * tableViewData[0].price) + "円", image: UIImage(named: "Icon"), backgroundColor: UIColor.red)
         banner.dismissesOnTap = true
         banner.show(duration: 3.0)
@@ -61,7 +59,7 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell =  MGSwipeTableCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "FoodCell")
-        cell.contentView.layer.borderColor = defaultRedColor.cgColor
+        cell.contentView.layer.borderColor = UIColor.DefaultRed.cgColor
         cell.contentView.layer.borderWidth = 2.0
         cell.contentView.layer.cornerRadius = 5.0
         

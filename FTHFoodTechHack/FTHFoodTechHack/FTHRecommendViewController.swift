@@ -4,13 +4,12 @@ import WebKit
 import FlatUIKit
 
 class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UITextFieldDelegate {
-    let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
     var _webkitview:WKWebView?
     var realm: Realm?
     var additionalFoodtextField = FTHCustoizedTextField(frame:CGRect.zero, isDate:false)
     //一番正味消え限が近い食品がbestBeforeFoodとして選択される
     var bestBeforeFood : RealmFood?
-    
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "おすすめレシピ"
@@ -18,11 +17,13 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         
         //賞味期限近い食品の取得
         self.realm = try! Realm()
-        bestBeforeFood = (self.realm?.objects(RealmFood.self).sorted(byProperty:"date").first)!
+		
+		// TODO: レコードがないときの例外処理は必須
+        bestBeforeFood = self.realm!.objects(RealmFood.self).sorted(byProperty:"date").first
         
         let bestBeforeDateLabel = UILabel(frame: CGRect(x: 30, y: 80, width: self.view.bounds.size.width, height: 50))
         bestBeforeDateLabel.textAlignment = NSTextAlignment.left
-        bestBeforeDateLabel.text = "賞味期限間近の食品 " + bestBeforeFood?.name
+        bestBeforeDateLabel.text = "賞味期限間近の食品 " + bestBeforeFood!.name
         self.view.addSubview(bestBeforeDateLabel)
         
         //他の食品も朝せて検索するとき
@@ -36,7 +37,7 @@ class FTHRecommendViewController: UIViewController, WKNavigationDelegate, UIText
         self.view.addSubview(additionalFoodtextField)
         
         let trybutton = FUIButton(frame : CGRect(x:30, y:otherFoodLabel.frame.maxY + 30, width:self.view.frame.size.width - 60, height:50))
-        trybutton.buttonColor = defaultRedColor
+        trybutton.buttonColor = UIColor.DefaultRed
         trybutton.shadowColor = UIColor.red
         trybutton.shadowHeight = 3.0
         trybutton.cornerRadius = 6.0

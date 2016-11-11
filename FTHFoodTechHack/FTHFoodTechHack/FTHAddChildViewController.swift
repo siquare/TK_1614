@@ -3,7 +3,6 @@ import RealmSwift
 import FlatUIKit
 
 class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlertViewDelegate{
-    let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
     let foodTextField = FTHCustoizedTextField(frame:CGRect.zero, isDate:false)
     let priceTextField = FTHCustoizedTextField(frame:CGRect.zero, isDate:false)
     var toolBar = UIToolbar()

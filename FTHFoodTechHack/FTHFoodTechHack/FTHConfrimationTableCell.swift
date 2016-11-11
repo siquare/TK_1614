@@ -5,15 +5,14 @@ class FTHConfrimationTableCell: UITableViewCell {
     var nameTextField = FTHCustoizedTextField(frame:CGRect.zero, isDate:false)
     var dateTextField = FTHCustoizedTextField(frame:CGRect.zero, isDate:true)
     var priceTextField =  FTHCustoizedTextField(frame:CGRect.zero, isDate:false)
-    let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
-    
+	
     override init(style:UITableViewCellStyle, reuseIdentifier reusedIdentifier:String!){
         let reuseIdentifier = reusedIdentifier
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         
         //TODO(AkariAsai):CustomizedTextFieldクラスに置き換え
-        self.layer.backgroundColor = defaultRedColor.cgColor
+        self.layer.backgroundColor = UIColor.DefaultRed.cgColor
         nameTextField.frame = CGRect(x:10, y:frame.minY + 5, width:frame.size.width/4, height:frame.size.height - 10)
         addSubview(nameTextField)
         

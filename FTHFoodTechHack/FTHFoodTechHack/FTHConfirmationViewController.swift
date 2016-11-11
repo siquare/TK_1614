@@ -5,12 +5,12 @@ import Alamofire
 import RealmSwift
 
 class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
-    let defaultRedColor =  UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
-    var realm: Realm?
-    var tableView : UITableView = UITableView()
-    var tableViewData : [(name:String, date:NSDate, price:Int)]
+
+	var tableView : UITableView = UITableView()
+
+	var realm: Realm?
+    var tableViewData : [ (name: String, date: NSDate, price: Int) ]
     
-    //var myScrollView: UIScrollView!
     var table : [ String : (Int, NSDate, Int) ]
     var myDatePicker : UIDatePicker
     var selectedCell : FTHConfrimationTableCell
@@ -96,7 +96,7 @@ class FTHConfirmationViewController: UIViewController, UITableViewDataSource, UI
         }
         let trybutton = FUIButton()
         trybutton.frame = CGRect(x:self.view.bounds.size.width/2 - 50, y:self.view.bounds.maxY - 100, width:100, height:50)
-        trybutton.buttonColor =  defaultRedColor
+        trybutton.buttonColor =  UIColor.DefaultRed
         trybutton.shadowColor = UIColor.red
         trybutton.shadowHeight = 3.0
         trybutton.cornerRadius = 6.0

@@ -6,8 +6,6 @@ import SCLAlertView
 
 
 class ViewController: UIViewController {
-    let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createUserAccountIfNeeded()
@@ -27,7 +25,7 @@ class ViewController: UIViewController {
         seeButtonLabel.textColor = UIColor.white
         seeButtonLabel.font = UIFont.systemFont(ofSize: CGFloat(20))
         seeButtonLabel.textAlignment = NSTextAlignment.center
-        seeButtonLabel.backgroundColor = defaultRedColor
+        seeButtonLabel.backgroundColor = UIColor.DefaultRed
         seeButton.addSubview(seeButtonLabel)
         self.view.addSubview(seeButton)
         
@@ -41,7 +39,7 @@ class ViewController: UIViewController {
         addButtonLabel.textColor = UIColor.white
         addButtonLabel.font = UIFont.systemFont(ofSize: CGFloat(20))
         addButtonLabel.textAlignment = NSTextAlignment.center
-        addButtonLabel.backgroundColor = defaultRedColor
+        addButtonLabel.backgroundColor = UIColor.DefaultRed
         addButton.addSubview(addButtonLabel)
         self.view.addSubview(addButton)
         
@@ -55,7 +53,7 @@ class ViewController: UIViewController {
         recButtonLabel.textColor = UIColor.white
         recButtonLabel.font = UIFont.systemFont(ofSize: CGFloat(20))
         recButtonLabel.textAlignment = NSTextAlignment.center
-        recButtonLabel.backgroundColor = defaultRedColor
+        recButtonLabel.backgroundColor = UIColor.DefaultRed
         recButton.addSubview(recButtonLabel)
         self.view.addSubview(recButton)
         
