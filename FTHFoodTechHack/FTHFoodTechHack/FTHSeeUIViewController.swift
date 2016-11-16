@@ -37,6 +37,7 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         banner.dismissesOnTap = true
         banner.show(duration: 3.0)
     }
+        
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

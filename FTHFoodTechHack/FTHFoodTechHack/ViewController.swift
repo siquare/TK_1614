@@ -13,48 +13,55 @@ class ViewController: UIViewController {
         
         self.view.backgroundColor = UIColor.white
         self.navigationItem.hidesBackButton = true
-        self.navigationItem.title = "Fresh Fridge"
+        //self.navigationItem.title = "Fresh Fridge"
         
-        let seeButton = UIButton(frame: CGRect(x: 50, y: 100, width: self.view.bounds.size.width - 100, height: self.view.bounds.size.height/5))
+        var imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+        imageView.contentMode = .scaleAspectFit
+        
+        let logo = UIImage(named: "logo")
+        imageView = UIImageView(image:logo)
+        self.navigationItem.titleView = imageView
+        
+        let seeButton = UIButton(frame: CGRect(x: 0, y: (self.navigationController?.navigationBar.frame.maxY)!, width: self.view.bounds.size.width, height: self.view.bounds.size.height/4))
         seeButton.backgroundColor = UIColor.red
         seeButton.setBackgroundImage(#imageLiteral(resourceName: "seecontent"), for: UIControlState.normal)
         seeButton.addTarget(self, action: #selector(didTapSeeButton), for: .touchUpInside)
         
         //adding buttonLabel
-        let seeButtonLabel = UILabel(frame:CGRect(x:0, y:seeButton.frame.size.height - 50, width:seeButton.frame.width, height:50))
+        let seeButtonLabel = UILabel(frame:CGRect(x: 0, y: 0, width: seeButton.frame.size.width, height: seeButton.frame.size.height))
         seeButtonLabel.text = "冷蔵庫の中身を見る"
         seeButtonLabel.textColor = UIColor.white
-        seeButtonLabel.font = UIFont.systemFont(ofSize: CGFloat(20))
+        seeButtonLabel.font = UIFont.boldSystemFont(ofSize: CGFloat(25))
         seeButtonLabel.textAlignment = NSTextAlignment.center
-        seeButtonLabel.backgroundColor = UIColor.DefaultRed
+        seeButtonLabel.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
         seeButton.addSubview(seeButtonLabel)
         self.view.addSubview(seeButton)
         
-        let addButton = UIButton(frame: CGRect(x: 50, y: 100 + seeButton.frame.height + 30, width: self.view.bounds.size.width - 100, height: self.view.bounds.size.height/5))
+        let addButton = UIButton(frame: CGRect(x: 0, y:seeButton.frame.maxY + 1, width: self.view.bounds.size.width, height: self.view.bounds.size.height/4))
         addButton.backgroundColor = UIColor.red
         addButton.setBackgroundImage(#imageLiteral(resourceName: "addcontent"), for: UIControlState.normal)
         addButton.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
         
-        let addButtonLabel = UILabel(frame:CGRect(x:0, y:seeButton.frame.size.height - 50, width:seeButton.frame.width, height:50))
+        let addButtonLabel = UILabel(frame:CGRect(x:0, y:0, width: addButton.frame.size.width, height: addButton.frame.size.height))
         addButtonLabel.text = "冷蔵庫に食材を追加する"
         addButtonLabel.textColor = UIColor.white
-        addButtonLabel.font = UIFont.systemFont(ofSize: CGFloat(20))
+        addButtonLabel.font = UIFont.boldSystemFont(ofSize: CGFloat(25))
         addButtonLabel.textAlignment = NSTextAlignment.center
-        addButtonLabel.backgroundColor = UIColor.DefaultRed
+        addButtonLabel.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
         addButton.addSubview(addButtonLabel)
         self.view.addSubview(addButton)
         
-        let recButton = UIButton(frame: CGRect(x: 50, y: addButton.frame.maxY + 30, width: self.view.bounds.size.width - 100, height: self.view.bounds.size.height/5))
+        let recButton = UIButton(frame: CGRect(x: 0, y: addButton.frame.maxY + 1, width: self.view.bounds.size.width, height: self.view.bounds.size.height/4))
         recButton.backgroundColor = UIColor.red
         recButton.setBackgroundImage(#imageLiteral(resourceName: "seerecomendation"), for: UIControlState.normal)
         recButton.addTarget(self, action: #selector(didTapRecommendButton), for: .touchUpInside)
         
-        let recButtonLabel = UILabel(frame:CGRect(x:0, y:seeButton.frame.size.height - 50, width:seeButton.frame.width, height:50))
+        let recButtonLabel = UILabel(frame:CGRect(x:0, y:0, width: self.view.bounds.size.width, height: self.view.bounds.size.height/4))
         recButtonLabel.text = "おすすめレシピを見る"
         recButtonLabel.textColor = UIColor.white
-        recButtonLabel.font = UIFont.systemFont(ofSize: CGFloat(20))
+        recButtonLabel.font = UIFont.boldSystemFont(ofSize: CGFloat(25))
         recButtonLabel.textAlignment = NSTextAlignment.center
-        recButtonLabel.backgroundColor = UIColor.DefaultRed
+        recButtonLabel.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
         recButton.addSubview(recButtonLabel)
         self.view.addSubview(recButton)
         

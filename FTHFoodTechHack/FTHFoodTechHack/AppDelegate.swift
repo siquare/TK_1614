@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         navigationController?.navigationBar.barTintColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
         navigationController?.navigationBar.tintColor = UIColor.white
-		
+        
 		Realm.Configuration.defaultConfiguration = Realm.Configuration(
 			schemaVersion: 1,  // Must be greater than previous version
 			migrationBlock: { migration, oldSchemaVersion in
