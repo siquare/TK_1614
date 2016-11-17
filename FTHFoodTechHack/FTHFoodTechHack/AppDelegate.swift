@@ -8,7 +8,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigationController: UINavigationController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
         let viewController: ViewController = ViewController()
         navigationController = UINavigationController(rootViewController: viewController)
         self.window = UIWindow(frame:UIScreen.main.bounds)
@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         navigationController?.navigationBar.barTintColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
         navigationController?.navigationBar.tintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
         
 		Realm.Configuration.defaultConfiguration = Realm.Configuration(
 			schemaVersion: 1,  // Must be greater than previous version
