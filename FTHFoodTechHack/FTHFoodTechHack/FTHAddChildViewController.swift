@@ -79,7 +79,7 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
         let realm = try! Realm()
 		
 		let name = foodTextField.text!
-		let date = dateFromString(string: self.dateTextField.text!, format:"yyyy年MM月dd")
+		let date = dateFromString(string: self.dateTextField.text!, format:"yyyy年MM月dd日")
 		let price = 100
 		
 		ServerSideDBWrapper.addItems([
