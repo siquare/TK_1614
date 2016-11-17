@@ -74,10 +74,6 @@ class ViewController: UIViewController {
         addDeviceQRButton.addTarget(self, action: #selector(didTapQrButton), for: .touchUpInside)
         self.view.addSubview(addDeviceQRButton)
         
-        
-        
-        //let alert = UIAlertController(title: "消費期限をお知らせして欲しいグループにLINE bot(@sok3197j)を招待して、下記の文字列をコピーして投稿して下さい。", message: "familytoken:\(familyToken)", preferredStyle: .alert)
-        
         let addLineButton = FUIButton(frame:CGRect(x:addDeviceQRButton.frame.maxX + 10, y:recButton.frame.maxY + 30, width: (self.view.bounds.size.width - 100)/2, height: 50))
         addLineButton.buttonColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
         addLineButton.setTitle("LineBot追加", for: .normal)
@@ -85,9 +81,8 @@ class ViewController: UIViewController {
         addLineButton.addTarget(self, action: #selector(didTapLineButton), for: .touchUpInside)
         self.view.addSubview(addLineButton)
         
+        //set alertView
         let realm = try! Realm()
-        
-        
         var data : [ RealmFood ] = []
         data = realm.objects(RealmFood.self).sorted(byProperty: "date").filter { $0.name.characters.count > 0 }
         
