@@ -80,7 +80,7 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
 		
 		let name = foodTextField.text!
 		let date = dateFromString(string: self.dateTextField.text!, format:"yyyy年MM月dd日")
-		let price = 100
+		let price = Int(priceTextField.text ?? "0") ?? 0
 		
 		ServerSideDBWrapper.addItems([
 			"user_item": [ [ "item_id": NSNull(), "item_name": name, "expire_date": stringFromDate(date: date, format: "yyyy-MM-dd"), "price": price ] ]

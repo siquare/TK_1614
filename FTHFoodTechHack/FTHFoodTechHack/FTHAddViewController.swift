@@ -4,7 +4,6 @@ import RealmSwift
 
 class FTHAddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var fthRefrigeratorModel = FTHRefrigeratorModel()
     var myImageView:UIImageView!
     
     override func viewDidLoad() {

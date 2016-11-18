@@ -21,7 +21,6 @@
 		45FC271A1DBB569500E4C333 /* FTHFoodTechHackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC27191DBB569500E4C333 /* FTHFoodTechHackTests.swift */; };
 		45FC27251DBB569500E4C333 /* FTHFoodTechHackUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC27241DBB569500E4C333 /* FTHFoodTechHackUITests.swift */; };
 		45FC27371DBB7B6A00E4C333 /* FTHSeeUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC27361DBB7B6A00E4C333 /* FTHSeeUIViewController.swift */; };
-		45FC27391DBC472600E4C333 /* FTHRefrigeratorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC27381DBC472600E4C333 /* FTHRefrigeratorModel.swift */; };
 		45FC273B1DBC4F2F00E4C333 /* FTHAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC273A1DBC4F2F00E4C333 /* FTHAddViewController.swift */; };
 		45FC273D1DBC51D400E4C333 /* FTHRecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC273C1DBC51D400E4C333 /* FTHRecommendViewController.swift */; };
 		45FC273F1DBC52D600E4C333 /* FTHFoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC273E1DBC52D600E4C333 /* FTHFoodModel.swift */; };
@@ -95,7 +94,6 @@
 		45FC27241DBB569500E4C333 /* FTHFoodTechHackUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTHFoodTechHackUITests.swift; sourceTree = "<group>"; };
 		45FC27261DBB569500E4C333 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45FC27361DBB7B6A00E4C333 /* FTHSeeUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTHSeeUIViewController.swift; sourceTree = "<group>"; };
-		45FC27381DBC472600E4C333 /* FTHRefrigeratorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTHRefrigeratorModel.swift; sourceTree = "<group>"; };
 		45FC273A1DBC4F2F00E4C333 /* FTHAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTHAddViewController.swift; sourceTree = "<group>"; };
 		45FC273C1DBC51D400E4C333 /* FTHRecommendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTHRecommendViewController.swift; sourceTree = "<group>"; };
 		45FC273E1DBC52D600E4C333 /* FTHFoodModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTHFoodModel.swift; sourceTree = "<group>"; };
@@ -194,7 +192,6 @@
 				45FC273A1DBC4F2F00E4C333 /* FTHAddViewController.swift */,
 				452B40BA1DC55329003080A0 /* FTHConfirmationViewController.swift */,
 				452B40BC1DC55955003080A0 /* FTHConfrimationTableCell.swift */,
-				45FC27381DBC472600E4C333 /* FTHRefrigeratorModel.swift */,
 				45FC273E1DBC52D600E4C333 /* FTHFoodModel.swift */,
 				45124DF91DC510A7005854B1 /* RealmFood.swift */,
 				462D043D1DC52BBE00BDE62B /* FTHRegisterDeviceViewController.swift */,
@@ -534,7 +531,6 @@
 				4636D86D1DCDC87800350FD5 /* ServerSideDBWrapper.swift in Sources */,
 				467056711DD62902004278C6 /* Extensions.swift in Sources */,
 				45FC27041DBB569500E4C333 /* ViewController.swift in Sources */,
-				45FC27391DBC472600E4C333 /* FTHRefrigeratorModel.swift in Sources */,
 				45FC27021DBB569500E4C333 /* AppDelegate.swift in Sources */,
 				45124DFA1DC510A7005854B1 /* RealmFood.swift in Sources */,
 				45CAEC081DCE3B660080869E /* FTHCustomizedTextField.swift in Sources */,
