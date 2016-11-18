@@ -46,7 +46,7 @@ void loop() {
   // byte. The serial monitor interprets all bytes as
   // ASCII, so 33, the first number,  will show up as '!'
     buttonState = digitalRead(buttonPin);
-    Serial.print("sending");
+    Serial.print("");
     if (buttonState == HIGH && humanDetected == false) 
     {
       Serial.print("detected");
