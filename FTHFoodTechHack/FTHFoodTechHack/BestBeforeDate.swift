@@ -67,44 +67,11 @@ class BestBeforeDate {
 	}
 	
 	func extractPriceFromFullText(_ full_text: String, word: String) -> Int {
-		for text in full_text.components(separatedBy: "\n") {
-			if text.contains(word) {
-				return self.extractPriceFromLine(text, word: word)
-			}
-		}
-		
-		return 0
-	}
-	
-	func extractPriceFromLine(_ _text: String, word: String) -> Int {
-		let text = _text.replacingOccurrences(of: ",", with: "")
-		
-		do {
-			let pattern = "([0-9]+)(^([0-9]+))$"
-			let regex = try NSRegularExpression(pattern: pattern, options: [])
-			let results = regex.matches(in: text, options: [], range: NSMakeRange(0, text.characters.count))
-			
-			if results.count > 0 {
-				return Int((text as NSString).substring(with: results[0].range))!
-			} else {
-				return 0
-			}
-		} catch _ as NSError {
-			return 0
-        }
-		
-		return 0
-	}
-	
-	func extractHeadNumber(_ d : String) -> Int {
-		do {
-			let pattern = "^([0-9]+)"
-			let regex = try NSRegularExpression(pattern: pattern, options: [])
-			let results = regex.matches(in: d, options: [], range: NSMakeRange(0, d.characters.count))
-			return Int((d as NSString).substring(with: results[0].range))!
-		} catch _ {
-			return 0
-		}
+		var text = full_text.replacingOccurrences(of: ",", with: "")
+		text = text.replacingOccurrences(of: "¥", with: " ")
+		text = text.replacingOccurrences(of: "\n", with: " ")
+
+		return Int(Regexp("\(word).+? +([0-9]+)").matches(input: text)?.first!.components(separatedBy: " ").last ?? "0")!
 	}
 	
 	func removeSuffixOnceRipe(_ d : String) -> Int {

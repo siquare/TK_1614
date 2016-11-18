@@ -2,37 +2,25 @@ import UIKit
 import FlatUIKit
 
 class FTHConfrimationTableCell: UITableViewCell {
-    var nameTextField:UITextField?
-    var dateTextField:UITextField?
-    var priceTextField: UITextField?
-    let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
-    
+    var nameTextField = FTHCustoizedTextField(frame:CGRect.zero, isDate:false)
+    var dateTextField = FTHCustoizedTextField(frame:CGRect.zero, isDate:true)
+    var priceTextField =  FTHCustoizedTextField(frame:CGRect.zero, isDate:false)
+	
     override init(style:UITableViewCellStyle, reuseIdentifier reusedIdentifier:String!){
         let reuseIdentifier = reusedIdentifier
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         
         //TODO(AkariAsai):CustomizedTextFieldクラスに置き換え
-        self.layer.backgroundColor = defaultRedColor.cgColor
-        nameTextField = UITextField()
-        dateTextField = UITextField()
-        priceTextField = UITextField()
-        nameTextField?.frame = CGRect(x:10, y:frame.minY + 5, width:frame.size.width/3, height:frame.size.height - 10)
-        nameTextField?.layer.cornerRadius = 10.0
+        self.layer.backgroundColor = UIColor.DefaultRed.cgColor
+        nameTextField.frame = CGRect(x:10, y:frame.minY + 5, width:frame.size.width/4, height:frame.size.height - 10)
+        addSubview(nameTextField)
         
-        nameTextField?.backgroundColor = UIColor.white
-        addSubview(nameTextField!)
-        
-        dateTextField?.frame = CGRect(x:(self.nameTextField?.frame.maxX)! + 30, y:frame.minY + 5, width:frame.size.width/3 , height:frame.size.height - 10)
-        dateTextField?.backgroundColor = UIColor.white
-        dateTextField?.layer.cornerRadius = 10.0
-        self.addSubview(dateTextField!)
+        dateTextField.frame = CGRect(x:(self.nameTextField.frame.maxX) + 30, y:frame.minY + 5, width:frame.size.width/2 - 20, height:frame.size.height - 10)
+        self.addSubview(dateTextField)
 
-        priceTextField?.frame = CGRect(x:(self.dateTextField?.frame.maxX)! + 30, y:frame.minY + 5, width:frame.size.width/4, height:frame.size.height - 10)
-
-        priceTextField?.backgroundColor = UIColor.white
-        priceTextField?.layer.cornerRadius = 10.0
-        self.addSubview(priceTextField!)
+        priceTextField.frame = CGRect(x:(self.dateTextField.frame.maxX) + 30, y:frame.minY + 5, width:frame.size.width/4, height:frame.size.height - 10)
+        self.addSubview(priceTextField)
     }
     
     required init?(coder aDecoder: NSCoder) {

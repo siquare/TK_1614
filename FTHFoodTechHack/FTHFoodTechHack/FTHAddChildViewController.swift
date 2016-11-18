@@ -3,7 +3,6 @@ import RealmSwift
 import FlatUIKit
 
 class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlertViewDelegate{
-    let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
     let foodTextField = FTHCustoizedTextField(frame:CGRect.zero, isDate:false)
     let priceTextField = FTHCustoizedTextField(frame:CGRect.zero, isDate:false)
     var toolBar = UIToolbar()
@@ -80,15 +79,15 @@ class FTHAddChildViewController: UIViewController, UITextFieldDelegate, FUIAlert
         let realm = try! Realm()
 		
 		let name = foodTextField.text!
-		let date = dateFromString(string: self.dateTextField.text!, format:"yyyy年MM月dd")
-		let price = 100
+		let date = dateFromString(string: self.dateTextField.text!, format:"yyyy年MM月dd日")
+		let price = Int(priceTextField.text ?? "0") ?? 0
 		
 		ServerSideDBWrapper.addItems([
 			"user_item": [ [ "item_id": NSNull(), "item_name": name, "expire_date": stringFromDate(date: date, format: "yyyy-MM-dd"), "price": price ] ]
 		], callback: { items in
 			try! realm.write {
 				items.forEach {
-					realm.add($0.toRealmFood())
+					realm.add($0)
 				}
 			}
 		})

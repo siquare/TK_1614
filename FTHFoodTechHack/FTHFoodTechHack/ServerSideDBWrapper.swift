@@ -1,26 +1,8 @@
-//
-//  ServerSideDBWrapper.swift
-//  FTHFoodTechHack
-//
-//  Created by KARASAWAHIROAKI on 2016/11/05.
-//  Copyright © 2016年 浅井紀子. All rights reserved.
-//
-
 import Foundation
 import Alamofire
 import SwiftyJSON
 
 class ServerSideDBWrapper {
-	static func deleteRemoteData(_ item : FTHFoodModel) {
-		let accessToken = self.getAccessToken()
-		
-		Alamofire.request("https://app.uthackers-app.tk/item/delete", method: .post, parameters: [
-			"user_item_id": [ item.id ]
-		], encoding: JSONEncoding.default, headers: [ "x-access-token" : accessToken ]).responseJSON { response in
-			print("Status Code: \(response.result.isSuccess)")
-		}
-	}
-	
 	/*
 	parameters format is ...
 	
@@ -39,42 +21,47 @@ class ServerSideDBWrapper {
 	]
 	}
 	*/
-	static func addItems(_ parameters : Parameters, callback : @escaping ([ FTHFoodModel ]) -> Void) {
-		let accessToken = self.getAccessToken()
+	static func addItems(_ parameters : Parameters, callback : @escaping ([ RealmFood ]) -> Void) {
+		let accessToken = self.getAccessToken()!
 
 		Alamofire.request("https://app.uthackers-app.tk/item/add", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: [ "x-access-token" : accessToken ]).responseJSON { response in
 			print("Status Code: \(response.result.isSuccess)")
 
 			guard let object = response.result.value else { return }
 			let json = JSON(object)
-			var table : [ FTHFoodModel ] = []
+			var table : [ RealmFood ] = []
 			
 			json["user_item"].arrayValue.forEach {
-				let id = $0["user_item_id"].intValue
-				let name = $0["item_name"].string!
-				let date = self.dateFromString(string: $0["expire_date"].string!, format: "yyyy-MM-dd")
-				let price = $0["price"].intValue
+				let realmFood = RealmFood()
 				
-				table.append(FTHFoodModel(name: name, date: date, price: price, id: id))
+				realmFood.id = $0["user_item_id"].intValue
+				realmFood.name = $0["item_name"].string!
+				realmFood.date = self.dateFromString(string: $0["expire_date"].string!, format: "yyyy-MM-dd")
+				realmFood.price = $0["price"].intValue
+				
+				table.append(realmFood)
 			}
 			
 			callback(table)
 		}
 	}
 	
-	static func deleteItems(_ items : [ FTHFoodModel ]) {
-		let accessToken = self.getAccessToken()
+	static func deleteItems(_ itemIds : [ Int ]) {
+		let accessToken = self.getAccessToken()!
 		
 		Alamofire.request("https://app.uthackers-app.tk/item/delete", method: .post, parameters: [
-			"user_item_id": items.map { $0.id }
-			], encoding: JSONEncoding.default, headers: [ "x-access-token" : accessToken ]).responseJSON { response in
+			"user_item_id": itemIds
+		], encoding: JSONEncoding.default, headers: [ "x-access-token" : accessToken ]).responseJSON { response in
 				print("Status Code: \(response.result.isSuccess)")
 		}
 	}
 	
-	static func getAccessToken() -> String {
-		let ud = UserDefaults.standard
-		return ud.object(forKey: "x-access-token") as! String
+	static func deleteItem(_ itemId : Int) {
+		self.deleteItems([ itemId ])
+	}
+	
+	static func getAccessToken() -> String? {
+		return UserDefaults.standard.string(forKey: "x-access-token")
 	}
 	
 	static func dateFromString(string: String, format: String) -> NSDate {

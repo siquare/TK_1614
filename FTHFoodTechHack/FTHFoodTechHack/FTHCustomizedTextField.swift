@@ -2,13 +2,11 @@ import UIKit
 import FlatUIKit
 
 class FTHCustoizedTextField: FUITextField {
-    let defaultRedColor = UIColor(red: (252/255.0), green: (114/255.0), blue: (84/255.0), alpha: 1.0)
-    
     init(frame: CGRect, isDate: Bool) {
         super.init(frame: frame)
         self.textFieldColor = UIColor.clear
         self.backgroundColor = UIColor.white
-        self.borderColor = defaultRedColor
+        self.borderColor = UIColor.DefaultRed
         self.borderWidth = 2.0
         self.cornerRadius = 3.0
         self.layer.cornerRadius = 3.0
