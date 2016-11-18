@@ -30,12 +30,6 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         myTableView.separatorColor = UIColor.clear
         
         self.view.addSubview(myTableView)
-		
-		// TODO: アプリ内通知は起動時に行うべきではないか。この画面にいるということはある品が賞味期限切れであることは自明ではないか。
-        // アプリ内通知, BRYXBannerライブラリ使用
-        let banner = Banner(title: tableViewData[0].name + "がもうすぐ賞味期限切れです！", subtitle:String(-1 * tableViewData[0].price) + "円", image: UIImage(named: "Icon"), backgroundColor: UIColor.red)
-        banner.dismissesOnTap = true
-        banner.show(duration: 3.0)
     }
         
     
