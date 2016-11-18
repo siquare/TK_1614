@@ -9,8 +9,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        let viewController: ViewController = ViewController()
-        navigationController = UINavigationController(rootViewController: viewController)
+		let viewController: ViewController = ViewController()
+
+		navigationController = UINavigationController(rootViewController: viewController)
         self.window = UIWindow(frame:UIScreen.main.bounds)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
@@ -26,9 +27,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					// minimally this can be empty
 				}
 		})
-		
+				
         return true
     }
+	
+	private func application(application: UIApplication, openURL url: URL, sourceApplication: String, annotation: Any?) -> Bool {
+		let params = url.queries()
+		
+		if let user_id = params["line_user_id"] {
+			ServerSideDBWrapper.addLineUser(user_id)
+		}
+		
+		if let group_id = params["line_group_id"] {
+			ServerSideDBWrapper.addLineGruop(group_id)
+		}
+		
+		return true
+	}
 	
     func applicationWillResignActive(_ application: UIApplication) {
     }
@@ -109,8 +124,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-    
-    
-
 }
 
