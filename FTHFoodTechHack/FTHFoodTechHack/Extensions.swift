@@ -60,3 +60,20 @@ class Regexp {
 		return results
 	}
 }
+
+extension URL {
+	func queries() -> Dictionary<String, String> {
+		var dict : Dictionary<String, String> = [:]
+		let pairs = self.query?.components(separatedBy: "&") ?? []
+		
+		for pair in pairs {
+			let elements = pair.components(separatedBy: "=")
+			let key = elements[0]
+			let val = elements[1]
+			
+			dict[key] = val
+		}
+		
+		return dict
+	}
+}

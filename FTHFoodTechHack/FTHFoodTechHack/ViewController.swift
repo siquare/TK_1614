@@ -86,11 +86,9 @@ class ViewController: UIViewController {
         var data : [ RealmFood ] = []
         data = realm.objects(RealmFood.self).sorted(byProperty: "date").filter { $0.name.characters.count > 0 }
         
-        let banner = Banner(title: data[0].name + "がもうすぐ賞味期限切れです！", subtitle:String(-1 * data[0].price) + "円", image: UIImage(named: "Icon"), backgroundColor: UIColor.red)
+        let banner = Banner(title: data[0].name + "がもうすぐ賞味期限切れです！", image: UIImage(named: "Icon"), backgroundColor: UIColor.red)
         banner.dismissesOnTap = true
-        banner.show(duration: 3.0)
-        
-        
+        banner.show(duration: 3.0)        
     }
     
     func didTapSeeButton(_ sender:UIButton!){

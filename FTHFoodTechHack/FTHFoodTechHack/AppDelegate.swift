@@ -8,8 +8,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigationController: UINavigationController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
-        let viewController: ViewController = ViewController()
+
+		let viewController: ViewController = ViewController()
         navigationController = UINavigationController(rootViewController: viewController)
         self.window = UIWindow(frame:UIScreen.main.bounds)
         self.window?.rootViewController = navigationController
@@ -26,9 +26,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					// minimally this can be empty
 				}
 		})
-		
+				
         return true
     }
+	
+//	NSURL *url = [NSURL URLWithString:@"callmyselfapp://"];
+//	if ([[UIApplication sharedApplication] canOpenURL:url]) {
+//	[[UIApplication sharedApplication] openURL:url];
+//	}
+	
+	private func application(application: UIApplication, openURL url: URL, sourceApplication: String, annotation: Any?) -> Bool {
+		let params = url.queries()
+		
+		if let user_id = params["line_user_id"] {
+			ServerSideDBWrapper.addLineUser(user_id)
+		}
+		
+		if let group_id = params["line_group_id"] {
+			ServerSideDBWrapper.addLineGruop(group_id)
+		}
+		
+		return true
+	}
+	
+//	func application(application: UIApplication!, openURL url: URL, sourceApplication: String!, annotation: Any?) -> Bool {
+//		println(sourceApplication)  // nil
+//		return true
+//	}
 	
     func applicationWillResignActive(_ application: UIApplication) {
     }
@@ -109,8 +133,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-    
-    
-
 }
 
