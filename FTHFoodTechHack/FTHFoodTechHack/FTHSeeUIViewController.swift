@@ -66,15 +66,15 @@ class FTHSeeUIViewController: UIViewController, UITableViewDataSource, UITableVi
         let foodModel = self.tableViewData[indexPath.row]
         let nameLabel = UILabel(frame: CGRect(x: 10, y: 0, width: 150, height:40))
         nameLabel.text = foodModel.name
-        cell.addSubview(nameLabel)
+        cell.contentView.addSubview(nameLabel)
 
 		let dateLabel = UILabel(frame: CGRect(x: self.myTableView.center.x - 30, y: 0, width: 150, height:40))
         dateLabel.text = "あと" + String(self.calculateBestBeforeDate(date: foodModel.date)) + "日"
-        cell.addSubview(dateLabel)
+        cell.contentView.addSubview(dateLabel)
 		
 		let priceLabel = UILabel(frame: CGRect(x: self.myTableView.frame.maxX - 100, y: 0, width: 150, height:40))
         priceLabel.text = String(foodModel.price) + "円"
-        cell.addSubview(priceLabel)
+        cell.contentView.addSubview(priceLabel)
 		
         cell.rightButtons = [ MGSwipeButton(title: "削除する", icon: UIImage(named: "check.png"), backgroundColor: UIColor.red, callback: {
             (sender: MGSwipeTableCell!) -> Bool in
