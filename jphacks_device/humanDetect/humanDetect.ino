@@ -23,6 +23,7 @@
 int buttonPin = 4;
 bool humanDetected = false;
 int buttonState = 0;
+int count = 0;
 void setup() {
   //Initialize serial and wait for port to open:
     pinMode(buttonPin, INPUT);
@@ -47,15 +48,22 @@ void loop() {
   // ASCII, so 33, the first number,  will show up as '!'
     buttonState = digitalRead(buttonPin);
     Serial.print("");
-    if (buttonState == HIGH && humanDetected == false) 
+    
+    if (buttonState == HIGH) 
+    {      
+      count+= 20;
+      delay(100);
+    }
+    else if(buttonState == LOW)
+    {
+      count -= 5;
+      delay(100);
+    }
+    if(count > 100)
     {
       Serial.print("detected");
-      delay(1000);          
-      humanDetected == true;
-    }
-    else if(buttonState == LOW && humanDetected == true)
-    {
-      humanDetected = false;
+      count = 0;
+      delay(10000);    
     }
     delay(200);
 
