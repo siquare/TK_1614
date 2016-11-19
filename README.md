@@ -41,11 +41,13 @@ FreshFridgeでは、こういった家庭から出る食品の廃棄を減らす
 
 * [Rakuten MA (形態素解析)](https://github.com/rakuten-nlp/rakutenma/blob/master/README-ja.md)
 * [Google Could Vision API (画像解析)](https://cloud.google.com/vision/)
+* [Google Translate API (機械翻訳)](https://cloud.google.com/translate/)
 
 #### API・データ
 
 * Line Messaging API
 * Google Could Vision API
+* Google Translation API
 * StillTasty  
 
 #### フレームワーク・ライブラリ・モジュール
@@ -63,6 +65,8 @@ FreshFridgeでは、こういった家庭から出る食品の廃棄を減らす
 * [physicaloid](http://www.physicaloid.com/)
 * [retrofit2](https://square.github.io/retrofit/)
 * [zxing](https://github.com/zxing/zxing)
+* [N2 TTS](http://www.kddi-research.jp/products/n2.html)
+* [Google GSON](https://github.com/google/gson)
 
 #### デバイス
 
@@ -75,4 +79,4 @@ FreshFridgeでは、こういった家庭から出る食品の廃棄を減らす
 ### 独自技術
 #### 期間中に開発した独自機能・技術
 
-* Raspberry Piを介したAndroidタブレットと人感センサの連携
+* Arduinoを介したAndroidタブレットと人感センサの連携
